@@ -859,8 +859,7 @@ class CombatSimulator extends EventTarget {
                     this.processAbilitySpendHpEffect(source, ability, abilityEffect);
                     break;
                 case "/ability_effect_types/revive":
-                    // TODO    
-                    //this.processAbilityHealEffect(source, ability, abilityEffect);
+                    this.processAbilityReviveEffect(source, ability, abilityEffect);
                     break;
                 default:
                     throw new Error("Unsupported effect type for ability: " + ability.hrid + " effectType: " + abilityEffect.effectType);
@@ -1048,6 +1047,30 @@ class CombatSimulator extends EventTarget {
 
         this.simResult.addHitpointsGained(source, ability.hrid, amountHealed);
         this.simResult.addExperienceGain(source, "magic", experienceGained);
+    }
+
+    processAbilityReviveEffect(source, ability, abilityEffect) {
+        if (abilityEffect.targetType != "a dead ally") {
+            throw new Error("Unsupported target type for revive ability effect: " + ability.hrid);
+        }
+
+        let targets = source.isPlayer ? this.players : this.enemies;
+        let reviveTarget = targets.find((unit) => unit && unit.combatDetails.currentHitpoints <= 0);
+
+        let amountHealed = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].processRevive(source, abilityEffect, reviveTarget);
+        let experienceGained = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].calculateHealingExperience(amountHealed);
+
+        this.simResult.addHitpointsGained(reviveTarget, ability.hrid, amountHealed);
+        this.simResult.addExperienceGain(source, "magic", experienceGained);
+
+        this.addNextAttackEvent(reviveTarget);
+
+        if (!source.isPlayer) {
+            this.simResult.updateTimeSpentAlive(reviveTarget.hrid, true, this.simulationTime);
+        }
+
+        // console.log(source.hrid + " revived " + reviveTarget.hrid + " with " + amountHealed + " HP.");
+        return;
     }
 
     processAbilitySpendHpEffect(source, ability, abilityEffect) {
@@ -1792,6 +1815,29 @@ class CombatUtilities {
 
         let heal = this.randomInt(minHeal, maxHeal);
         let amountHealed = target.addHitpoints(heal);
+
+        return amountHealed;
+    }
+
+    static processRevive(source, abilityEffect, target) {
+        if (abilityEffect.combatStyleHrid != "/combat_styles/magic") {
+            throw new Error("Heal ability effect not supported for combat style: " + abilityEffect.combatStyleHrid);
+        }
+
+        let healingAmplify = 1 + source.combatDetails.combatStats.healingAmplify;
+        let magicMaxDamage = source.combatDetails.magicMaxDamage;
+
+        let baseHealFlat = abilityEffect.damageFlat;
+        let baseHealRatio = abilityEffect.damageRatio;
+
+        let minHeal = healingAmplify * (1 + baseHealFlat);
+        let maxHeal = healingAmplify * (baseHealRatio * magicMaxDamage + baseHealFlat);
+
+        let heal = this.randomInt(minHeal, maxHeal);
+        let amountHealed = target.addHitpoints(heal);
+        target.combatDetails.currentManapoints = target.combatDetails.maxManapoints;
+        target.clearCCs();
+        target.clearBuffs();
 
         return amountHealed;
     }

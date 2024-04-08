@@ -674,8 +674,7 @@ class CombatSimulator extends EventTarget {
                     this.processAbilitySpendHpEffect(source, ability, abilityEffect);
                     break;
                 case "/ability_effect_types/revive":
-                    // TODO    
-                    //this.processAbilityHealEffect(source, ability, abilityEffect);
+                    this.processAbilityReviveEffect(source, ability, abilityEffect);
                     break;
                 default:
                     throw new Error("Unsupported effect type for ability: " + ability.hrid + " effectType: " + abilityEffect.effectType);
@@ -863,6 +862,30 @@ class CombatSimulator extends EventTarget {
 
         this.simResult.addHitpointsGained(source, ability.hrid, amountHealed);
         this.simResult.addExperienceGain(source, "magic", experienceGained);
+    }
+
+    processAbilityReviveEffect(source, ability, abilityEffect) {
+        if (abilityEffect.targetType != "a dead ally") {
+            throw new Error("Unsupported target type for revive ability effect: " + ability.hrid);
+        }
+
+        let targets = source.isPlayer ? this.players : this.enemies;
+        let reviveTarget = targets.find((unit) => unit && unit.combatDetails.currentHitpoints <= 0);
+
+        let amountHealed = CombatUtilities.processRevive(source, abilityEffect, reviveTarget);
+        let experienceGained = CombatUtilities.calculateHealingExperience(amountHealed);
+
+        this.simResult.addHitpointsGained(reviveTarget, ability.hrid, amountHealed);
+        this.simResult.addExperienceGain(source, "magic", experienceGained);
+
+        this.addNextAttackEvent(reviveTarget);
+
+        if (!source.isPlayer) {
+            this.simResult.updateTimeSpentAlive(reviveTarget.hrid, true, this.simulationTime);
+        }
+
+        // console.log(source.hrid + " revived " + reviveTarget.hrid + " with " + amountHealed + " HP.");
+        return;
     }
 
     processAbilitySpendHpEffect(source, ability, abilityEffect) {

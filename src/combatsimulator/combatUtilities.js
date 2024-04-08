@@ -279,6 +279,29 @@ class CombatUtilities {
         return amountHealed;
     }
 
+    static processRevive(source, abilityEffect, target) {
+        if (abilityEffect.combatStyleHrid != "/combat_styles/magic") {
+            throw new Error("Heal ability effect not supported for combat style: " + abilityEffect.combatStyleHrid);
+        }
+
+        let healingAmplify = 1 + source.combatDetails.combatStats.healingAmplify;
+        let magicMaxDamage = source.combatDetails.magicMaxDamage;
+
+        let baseHealFlat = abilityEffect.damageFlat;
+        let baseHealRatio = abilityEffect.damageRatio;
+
+        let minHeal = healingAmplify * (1 + baseHealFlat);
+        let maxHeal = healingAmplify * (baseHealRatio * magicMaxDamage + baseHealFlat);
+
+        let heal = this.randomInt(minHeal, maxHeal);
+        let amountHealed = target.addHitpoints(heal);
+        target.combatDetails.currentManapoints = target.combatDetails.maxManapoints;
+        target.clearCCs();
+        target.clearBuffs();
+
+        return amountHealed;
+    }
+
     static processSpendHp(source, abilityEffect) {
         let currentHp = source.combatDetails.currentHitpoints;
         let spendHpRatio = abilityEffect.spendHpRatio;
