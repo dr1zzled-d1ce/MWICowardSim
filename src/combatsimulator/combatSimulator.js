@@ -838,18 +838,20 @@ class CombatSimulator extends EventTarget {
 
         if (abilityEffect.targetType == "lowest HP ally") {
             let targets = source.isPlayer ? this.players : this.enemies;
-            let healTarget = source;
+            let healTarget;
             for (const target of targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0)) {
                 if (target.combatDetails.currentHitpoints < healTarget.combatDetails.currentHitpoints) {
                     healTarget = target;
                 }
             }
 
-            let amountHealed = CombatUtilities.processHeal(source, abilityEffect, healTarget);
-            let experienceGained = CombatUtilities.calculateHealingExperience(amountHealed);
+            if (healTarget) {
+                let amountHealed = CombatUtilities.processHeal(source, abilityEffect, healTarget);
+                let experienceGained = CombatUtilities.calculateHealingExperience(amountHealed);
 
-            this.simResult.addHitpointsGained(healTarget, ability.hrid, amountHealed);
-            this.simResult.addExperienceGain(source, "magic", experienceGained);
+                this.simResult.addHitpointsGained(healTarget, ability.hrid, amountHealed);
+                this.simResult.addExperienceGain(source, "magic", experienceGained);
+            }
             return;
         }
 
@@ -872,19 +874,21 @@ class CombatSimulator extends EventTarget {
         let targets = source.isPlayer ? this.players : this.enemies;
         let reviveTarget = targets.find((unit) => unit && unit.combatDetails.currentHitpoints <= 0);
 
-        let amountHealed = CombatUtilities.processRevive(source, abilityEffect, reviveTarget);
-        let experienceGained = CombatUtilities.calculateHealingExperience(amountHealed);
+        if (reviveTarget) {
+            let amountHealed = CombatUtilities.processRevive(source, abilityEffect, reviveTarget);
+            let experienceGained = CombatUtilities.calculateHealingExperience(amountHealed);
 
-        this.simResult.addHitpointsGained(reviveTarget, ability.hrid, amountHealed);
-        this.simResult.addExperienceGain(source, "magic", experienceGained);
+            this.simResult.addHitpointsGained(reviveTarget, ability.hrid, amountHealed);
+            this.simResult.addExperienceGain(source, "magic", experienceGained);
 
-        this.addNextAttackEvent(reviveTarget);
+            this.addNextAttackEvent(reviveTarget);
 
-        if (!source.isPlayer) {
-            this.simResult.updateTimeSpentAlive(reviveTarget.hrid, true, this.simulationTime);
+            if (!source.isPlayer) {
+                this.simResult.updateTimeSpentAlive(reviveTarget.hrid, true, this.simulationTime);
+            }
+
+            // console.log(source.hrid + " revived " + reviveTarget.hrid + " with " + amountHealed + " HP.");
         }
-
-        // console.log(source.hrid + " revived " + reviveTarget.hrid + " with " + amountHealed + " HP.");
         return;
     }
 
