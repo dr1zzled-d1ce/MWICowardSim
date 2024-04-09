@@ -1025,6 +1025,10 @@ class CombatSimulator extends EventTarget {
             let targets = source.isPlayer ? this.players : this.enemies;
             let healTarget;
             for (const target of targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0)) {
+                if (!healTarget) {
+                    healTarget = target;
+                    continue;
+                }
                 if (target.combatDetails.currentHitpoints < healTarget.combatDetails.currentHitpoints) {
                     healTarget = target;
                 }
