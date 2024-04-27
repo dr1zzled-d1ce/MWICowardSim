@@ -340,7 +340,11 @@ function updateCombatStatsUI() {
         "naturePenetration",
         "firePenetration",
         "manaLeech",
-        "castSpeed"
+        "castSpeed",
+        "parry",
+        "mayhem",
+        "pierce",
+        "curse"
     ].forEach((stat) => {
         let element = document.getElementById("combatStat_" + stat);
         let value = (100 * player.combatDetails.combatStats[stat]).toLocaleString([], {
@@ -783,8 +787,9 @@ function showElement(element) {
 function initZones() {
     let zoneSelect = document.getElementById("selectZone");
 
+    // TOOD dungeon wave spawns
     let gameZones = Object.values(actionDetailMap)
-        .filter((action) => action.type == "/action_types/combat")
+        .filter((action) => action.type == "/action_types/combat" && action.category != "/action_categories/combat/dungeons")
         .sort((a, b) => a.sortIndex - b.sortIndex);
 
     for (const zone of Object.values(gameZones)) {
@@ -855,13 +860,13 @@ function showKills(simResult) {
         const dropMap = new Map();
         const rareDropMap = new Map();
         for (const drop of combatMonsterDetailMap[monster].dropTable) {
-            if (!simResult.isElite && drop.isEliteOnly) {
+            if (drop.minEliteTier > simResult.eliteTier) {
                 continue;
             }
             dropMap.set(itemDetailMap[drop.itemHrid]['name'], { "dropRate": Math.min(1, drop.dropRate * dropRateMultiplier), "number": 0, "dropMin": drop.minCount, "dropMax": drop.maxCount, "noRngDropAmount": 0 });
         }
         for (const drop of combatMonsterDetailMap[monster].rareDropTable) {
-            if (!simResult.isElite && drop.isEliteOnly) {
+            if (drop.minEliteTier > simResult.eliteTier) {
                 continue;
             }
             rareDropMap.set(itemDetailMap[drop.itemHrid]['name'], { "dropRate": drop.dropRate * rareFindMultiplier, "number": 0, "dropMin": drop.minCount, "dropMax": drop.maxCount, "noRngDropAmount": 0 });

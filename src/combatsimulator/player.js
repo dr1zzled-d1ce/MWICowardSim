@@ -116,7 +116,11 @@ class Player extends CombatUnit {
             "tenacity",
             "manaLeech",
             "castSpeed",
-            "threat"
+            "threat",
+            "parry",
+            "mayhem",
+            "pierce",
+            "curse"
         ].forEach((stat) => {
             this.combatDetails.combatStats[stat] = Object.values(this.equipment)
                 .filter((equipment) => equipment != null)

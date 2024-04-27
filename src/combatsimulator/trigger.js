@@ -139,6 +139,7 @@ class Trigger {
             case "/combat_trigger_conditions/sylvan_aura_nature_amplify":
             case "/combat_trigger_conditions/sylvan_aura_nature_resistance":
             case "/combat_trigger_conditions/taunt":
+            case "/combat_trigger_conditions/curse":
                 let buffHrid = "/buff_uniques";
                 buffHrid += this.conditionHrid.slice(this.conditionHrid.lastIndexOf("/"));
                 return source.combatBuffs[buffHrid];

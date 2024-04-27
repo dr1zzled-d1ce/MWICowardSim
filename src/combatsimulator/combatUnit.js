@@ -108,7 +108,12 @@ class CombatUnit {
             firePenetration: 0,
             manaLeech: 0,
             castSpeed: 0,
-            threat: 0
+            threat: 0,
+            parry: 0,
+            mayhem: 0,
+            pierce: 0,
+            curse: 0,
+            damageTaken: 0
         },
     };
     combatBuffs = {};

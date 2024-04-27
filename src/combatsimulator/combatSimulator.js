@@ -71,7 +71,7 @@ class CombatSimulator extends EventTarget {
             }
         }
 
-        this.simResult.isElite = this.zone.monsterSpawnInfo.spawns[0].isElite;
+        this.simResult.eliteTier = this.zone.monsterSpawnInfo.randomSpawnInfo.spawns[0].eliteTier;
 
         return this.simResult;
     }
@@ -189,62 +189,65 @@ class CombatSimulator extends EventTarget {
 
     processAutoAttackEvent(event) {
         // console.log("source:", event.source.hrid);
-
         // console.log("aa " + (this.simulationTime / 1000000000));
 
-        let target;
-        if (event.source.isPlayer) {
-            target = CombatUtilities.getTarget(this.enemies);
-        } else {
-            target = CombatUtilities.getTarget(this.players);
-        }
+        let targets = event.source.isPlayer ? this.enemies : this.players;
+        targets = targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0);
 
-        if (!target) {
+        if (!targets || targets.length == 0) {
             return;
         }
-        let attackResult = CombatUtilities.processAttack(event.source, target);
 
-        this.simResult.addAttack(
-            event.source,
-            target,
-            "autoAttack",
-            attackResult.didHit ? attackResult.damageDone : "miss"
-        );
+        for (let target of targets) {
+            let attackResult = CombatUtilities.processAttack(event.source, target);
 
-        if (attackResult.lifeStealHeal > 0) {
-            this.simResult.addHitpointsGained(event.source, "lifesteal", attackResult.lifeStealHeal);
-        }
+            this.simResult.addAttack(
+                event.source,
+                target,
+                "autoAttack",
+                attackResult.didHit ? attackResult.damageDone : "miss"
+            );
 
-        if (attackResult.manaLeechMana > 0) {
-            this.simResult.addManapointsGained(event.source, "manaLeech", attackResult.manaLeechMana);
-        }
-
-        if (attackResult.reflectDamageDone > 0) {
-            this.simResult.addAttack(target, event.source, "physicalReflect", attackResult.reflectDamageDone);
-        }
-
-        for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
-            this.simResult.addExperienceGain(event.source, skill, xp);
-        }
-        for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
-            this.simResult.addExperienceGain(target, skill, xp);
-        }
-
-        if (target.combatDetails.currentHitpoints == 0) {
-            this.eventQueue.clearEventsForUnit(target);
-            this.simResult.addDeath(target);
-            if (!target.isPlayer) {
-                this.simResult.updateTimeSpentAlive(target.hrid, false, this.simulationTime);
+            if (attackResult.lifeStealHeal > 0) {
+                this.simResult.addHitpointsGained(event.source, "lifesteal", attackResult.lifeStealHeal);
             }
-            // console.log(target.hrid, "died");
-        }
 
-        // Could die from reflect damage
-        if (event.source.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
-            this.eventQueue.clearEventsForUnit(event.source);
-            this.simResult.addDeath(event.source);
-            if (!event.source.isPlayer) {
-                this.simResult.updateTimeSpentAlive(event.source.hrid, false, this.simulationTime);
+            if (attackResult.manaLeechMana > 0) {
+                this.simResult.addManapointsGained(event.source, "manaLeech", attackResult.manaLeechMana);
+            }
+
+            if (attackResult.reflectDamageDone > 0) {
+                this.simResult.addAttack(target, event.source, "physicalReflect", attackResult.reflectDamageDone);
+            }
+
+            for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
+                this.simResult.addExperienceGain(event.source, skill, xp);
+            }
+            for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
+                this.simResult.addExperienceGain(target, skill, xp);
+            }
+
+            if (target.combatDetails.currentHitpoints == 0) {
+                this.eventQueue.clearEventsForUnit(target);
+                this.simResult.addDeath(target);
+                if (!target.isPlayer) {
+                    this.simResult.updateTimeSpentAlive(target.hrid, false, this.simulationTime);
+                }
+                // console.log(target.hrid, "died");
+            }
+
+            // Could die from reflect damage
+            if (event.source.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
+                this.eventQueue.clearEventsForUnit(event.source);
+                this.simResult.addDeath(event.source);
+                if (!event.source.isPlayer) {
+                    this.simResult.updateTimeSpentAlive(event.source.hrid, false, this.simulationTime);
+                }
+                break;
+            }
+
+            if (!attackResult.didHit || event.source.combatDetails.combatStats.pierce <= Math.random()) {
+                break;
             }
         }
 
