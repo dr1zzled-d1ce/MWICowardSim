@@ -12417,6 +12417,454 @@
         "buffs": null,
         "sortIndex": 14
     },
+    "/actions/combat/sinister_circus": {
+        "hrid": "/actions/combat/sinister_circus",
+        "function": "/action_functions/combat",
+        "type": "/action_types/combat",
+        "category": "/action_categories/combat/dungeons",
+        "name": "Sinister Circus",
+        "levelRequirement": {
+            "skillHrid": "",
+            "level": 0
+        },
+        "baseTimeCost": 3000000000,
+        "experienceGain": {
+            "skillHrid": "",
+            "value": 0
+        },
+        "dropTable": null,
+        "rareDropTable": null,
+        "upgradeItemHrid": "",
+        "inputItems": null,
+        "outputItems": null,
+        "combatZoneInfo": {
+            "isDungeon": true,
+            "fightInfo": {
+                "randomSpawnInfo": {
+                    "maxSpawnCount": 0,
+                    "maxTotalStrength": 0,
+                    "spawns": null
+                },
+                "bossSpawns": null,
+                "battlesPerBoss": 0
+            },
+            "dungeonInfo": {
+                "keyItemHrid": "/items/sinister_key",
+                "rewardDropTable": [
+                    {
+                        "itemHrid": "/items/sinister_chest",
+                        "dropRate": 1,
+                        "minCount": 1,
+                        "maxCount": 1,
+                        "minEliteTier": 0
+                    }
+                ],
+                "maxWaves": 60,
+                "randomSpawnInfoMap": {
+                    "1": {
+                        "maxSpawnCount": 4,
+                        "maxTotalStrength": 250,
+                        "spawns": [
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_stabby",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_slashy",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_smashy",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_shooty",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_boomy",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/novice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gummy_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            }
+                        ]
+                    },
+                    "16": {
+                        "maxSpawnCount": 5,
+                        "maxTotalStrength": 300,
+                        "spawns": [
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_stabby",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_slashy",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_smashy",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_shooty",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_boomy",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/novice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gummy_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/rabid_rabbit",
+                                "eliteTier": 0,
+                                "rate": 2,
+                                "strength": 150
+                            }
+                        ]
+                    },
+                    "40": {
+                        "maxSpawnCount": 5,
+                        "maxTotalStrength": 400,
+                        "spawns": [
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_stabby",
+                                "eliteTier": 2,
+                                "rate": 0.5,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_slashy",
+                                "eliteTier": 2,
+                                "rate": 0.5,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_smashy",
+                                "eliteTier": 2,
+                                "rate": 0.5,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_shooty",
+                                "eliteTier": 2,
+                                "rate": 0.5,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/gobo_boomy",
+                                "eliteTier": 2,
+                                "rate": 0.5,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/black_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/ice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/flame_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/panda",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 95
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/black_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 95
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/grizzly_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 100
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/polar_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 105
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/elementalist",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 120
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/zombie",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 130
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/vampire",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 140
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/werewolf",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 150
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/rabid_rabbit",
+                                "eliteTier": 0,
+                                "rate": 2,
+                                "strength": 150
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/zombie_bear",
+                                "eliteTier": 0,
+                                "rate": 2,
+                                "strength": 250
+                            }
+                        ]
+                    }
+                },
+                "fixedSpawnsMap": {
+                    "5": [
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "10": [
+                        {
+                            "combatMonsterHrid": "/monsters/zombie_bear",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "15": [
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/zombie_bear",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "20": [
+                        {
+                            "combatMonsterHrid": "/monsters/acrobat",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "25": [
+                        {
+                            "combatMonsterHrid": "/monsters/juggler",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "30": [
+                        {
+                            "combatMonsterHrid": "/monsters/magician",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "35": [
+                        {
+                            "combatMonsterHrid": "/monsters/acrobat",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "40": [
+                        {
+                            "combatMonsterHrid": "/monsters/zombie_bear",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/juggler",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "45": [
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/magician",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/zombie_bear",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "50": [
+                        {
+                            "combatMonsterHrid": "/monsters/acrobat",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/zombie_bear",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/juggler",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "55": [
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/magician",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/rabid_rabbit",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "60": [
+                        {
+                            "combatMonsterHrid": "/monsters/deranged_jester",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ]
+                }
+            }
+        },
+        "maxPartySize": 5,
+        "buffs": [
+            {
+                "uniqueHrid": "/buff_uniques/experience_action_buff",
+                "typeHrid": "/buff_types/wisdom",
+                "ratioBoost": 0,
+                "ratioBoostLevelBonus": 0,
+                "flatBoost": 0.2,
+                "flatBoostLevelBonus": 0,
+                "startTime": "0001-01-01T00:00:00Z",
+                "duration": 0
+            }
+        ],
+        "sortIndex": 68
+    },
     "/actions/combat/skunk": {
         "hrid": "/actions/combat/skunk",
         "function": "/action_functions/combat",
