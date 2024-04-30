@@ -251,7 +251,7 @@ class CombatSimulator extends EventTarget {
         this.simResult.setManaUsed(this.players[0]);
 
         if (this.zone.monsterSpawnInfo.bossSpawns) {
-            for (const boss in this.zone.monsterSpawnInfo.bossSpawns) {
+            for (const boss of this.zone.monsterSpawnInfo.bossSpawns) {
                 this.simResult.bossSpawns.push(boss.combatMonsterHrid);
             }
         }
@@ -2660,7 +2660,7 @@ class Monster extends _combatUnit__WEBPACK_IMPORTED_MODULE_1__["default"] {
         }
 
         for (let i = 0; i < gameMonster.abilities.length; i++) {
-            if (gameMonster.abilities[i].eliteTier > this.eliteTier) {
+            if (gameMonster.abilities[i].minEliteTier > this.eliteTier) {
                 continue;
             }
             this.abilities[i] = new _ability__WEBPACK_IMPORTED_MODULE_0__["default"](gameMonster.abilities[i].abilityHrid, gameMonster.abilities[i].level);

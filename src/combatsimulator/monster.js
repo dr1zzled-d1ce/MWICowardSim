@@ -20,7 +20,7 @@ class Monster extends CombatUnit {
         }
 
         for (let i = 0; i < gameMonster.abilities.length; i++) {
-            if (gameMonster.abilities[i].eliteTier > this.eliteTier) {
+            if (gameMonster.abilities[i].minEliteTier > this.eliteTier) {
                 continue;
             }
             this.abilities[i] = new Ability(gameMonster.abilities[i].abilityHrid, gameMonster.abilities[i].level);
