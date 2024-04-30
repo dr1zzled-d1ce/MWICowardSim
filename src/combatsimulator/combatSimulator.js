@@ -12,6 +12,7 @@ import RegenTickEvent from "./events/regenTickEvent";
 import StunExpirationEvent from "./events/stunExpirationEvent";
 import BlindExpirationEvent from "./events/blindExpirationEvent";
 import SilenceExpirationEvent from "./events/silenceExpirationEvent";
+import CurseExpirationEvent from "./events/curseExpirationEvent";
 import SimResult from "./simResult";
 import AbilityCastEndEvent from "./events/abilityCastEndEvent";
 import AwaitCooldownEvent from "./events/awaitCooldownEvent";
@@ -121,6 +122,9 @@ class CombatSimulator extends EventTarget {
             case SilenceExpirationEvent.type:
                 this.processSilenceExpirationEvent(event);
                 break;
+            case CurseExpirationEvent.type:
+                this.processCurseExpirationEvent(event);
+                break;
             case AbilityCastEndEvent.type:
                 this.tryUseAbility(event.source, event.ability);
                 break;
@@ -199,29 +203,48 @@ class CombatSimulator extends EventTarget {
         }
 
         for (let target of targets) {
-            let attackResult = CombatUtilities.processAttack(event.source, target);
+
+            let source = event.source;
+
+            if (target.combatDetails.combatStats.parry > Math.random()) {
+                let temp = source;
+                source = target;
+                target = temp;
+            }
+
+            let attackResult = CombatUtilities.processAttack(source, target);
+
+            if (attackResult.didHit && source.combatDetails.combatStats.curse > 0 && Math.random() < (100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                target.curseExpireTime = this.simulationTime + 15000000000;
+                if (target.combatDetails.combatStats.damageTaken < 0.1) {
+                    target.combatDetails.combatStats.damageTaken += 0.01;
+                }
+                this.eventQueue.clearMatching((event) => event.type == CurseExpirationEvent.type && event.source == target)
+                let curseExpirationEvent = new CurseExpirationEvent(target.curseExpireTime, target);
+                this.eventQueue.addEvent(curseExpirationEvent);
+            }
 
             this.simResult.addAttack(
-                event.source,
+                source,
                 target,
                 "autoAttack",
                 attackResult.didHit ? attackResult.damageDone : "miss"
             );
 
             if (attackResult.lifeStealHeal > 0) {
-                this.simResult.addHitpointsGained(event.source, "lifesteal", attackResult.lifeStealHeal);
+                this.simResult.addHitpointsGained(source, "lifesteal", attackResult.lifeStealHeal);
             }
 
             if (attackResult.manaLeechMana > 0) {
-                this.simResult.addManapointsGained(event.source, "manaLeech", attackResult.manaLeechMana);
+                this.simResult.addManapointsGained(source, "manaLeech", attackResult.manaLeechMana);
             }
 
             if (attackResult.reflectDamageDone > 0) {
-                this.simResult.addAttack(target, event.source, "physicalReflect", attackResult.reflectDamageDone);
+                this.simResult.addAttack(target, source, "physicalReflect", attackResult.reflectDamageDone);
             }
 
             for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
-                this.simResult.addExperienceGain(event.source, skill, xp);
+                this.simResult.addExperienceGain(source, skill, xp);
             }
             for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
                 this.simResult.addExperienceGain(target, skill, xp);
@@ -237,16 +260,20 @@ class CombatSimulator extends EventTarget {
             }
 
             // Could die from reflect damage
-            if (event.source.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
-                this.eventQueue.clearEventsForUnit(event.source);
-                this.simResult.addDeath(event.source);
-                if (!event.source.isPlayer) {
-                    this.simResult.updateTimeSpentAlive(event.source.hrid, false, this.simulationTime);
+            if (source.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
+                this.eventQueue.clearEventsForUnit(source);
+                this.simResult.addDeath(source);
+                if (!source.isPlayer) {
+                    this.simResult.updateTimeSpentAlive(source.hrid, false, this.simulationTime);
                 }
                 break;
             }
 
-            if (!attackResult.didHit || event.source.combatDetails.combatStats.pierce <= Math.random()) {
+            if (!attackResult.didHit && source.combatDetails.combatStats.mayhem > Math.random()) {
+                continue;
+            }
+
+            if (!attackResult.didHit || source.combatDetails.combatStats.pierce <= Math.random()) {
                 break;
             }
         }
@@ -510,6 +537,10 @@ class CombatSimulator extends EventTarget {
         event.source.isSilenced = false;
     }
 
+    processCurseExpirationEvent(event) {
+        event.source.damageTaken = 0;
+    }
+
     checkTriggers() {
         let triggeredSomething;
 
@@ -739,88 +770,150 @@ class CombatSimulator extends EventTarget {
         }
 
         for (const target of targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0)) {
-            let attackResult = CombatUtilities.processAttack(source, target, abilityEffect);
+            if (target.combatDetails.combatStats.parry > Math.random()) {
+                let tempTarget = source;
+                let tempSource = target;
 
-            if (attackResult.didHit && abilityEffect.buffs) {
-                for (const buff of abilityEffect.buffs) {
-                    target.addBuff(buff, this.simulationTime);
-                    let checkBuffExpirationEvent = new CheckBuffExpirationEvent(
-                        this.simulationTime + buff.duration,
-                        target
-                    );
-                    this.eventQueue.addEvent(checkBuffExpirationEvent);
+                let attackResult = CombatUtilities.processAttack(tempSource, tempTarget);
+
+                this.simResult.addAttack(
+                    tempSource,
+                    tempTarget,
+                    "autoAttack",
+                    attackResult.didHit ? attackResult.damageDone : "miss"
+                );
+
+                if (attackResult.lifeStealHeal > 0) {
+                    this.simResult.addHitpointsGained(tempSource, "lifesteal", attackResult.lifeStealHeal);
                 }
-            }
 
-            if (abilityEffect.damageOverTimeRatio > 0 && attackResult.damageDone > 0) {
-                let damageOverTimeEvent = new DamageOverTimeEvent(
-                    this.simulationTime + DOT_TICK_INTERVAL,
+                if (attackResult.manaLeechMana > 0) {
+                    this.simResult.addManapointsGained(tempSource, "manaLeech", attackResult.manaLeechMana);
+                }
+
+                if (attackResult.reflectDamageDone > 0) {
+                    this.simResult.addAttack(tempTarget, tempSource, "physicalReflect", attackResult.reflectDamageDone);
+                }
+
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
+                    this.simResult.addExperienceGain(tempSource, skill, xp);
+                }
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
+                    this.simResult.addExperienceGain(tempTarget, skill, xp);
+                }
+
+                if (tempTarget.combatDetails.currentHitpoints == 0) {
+                    this.eventQueue.clearEventsForUnit(tempTarget);
+                    this.simResult.addDeath(tempTarget);
+                    if (!tempTarget.isPlayer) {
+                        this.simResult.updateTimeSpentAlive(tempTarget.hrid, false, this.simulationTime);
+                    }
+                    // console.log(tempTarget.hrid, "died");
+                }
+
+                // Could die from reflect damage
+                if (tempSource.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
+                    this.eventQueue.clearEventsForUnit(tempSource);
+                    this.simResult.addDeath(tempSource);
+                    if (!tempSource.isPlayer) {
+                        this.simResult.updateTimeSpentAlive(tempSource.hrid, false, this.simulationTime);
+                    }
+                    break;
+                }
+            } else {
+                let attackResult = CombatUtilities.processAttack(source, target, abilityEffect);
+
+                if (attackResult.didHit && abilityEffect.buffs) {
+                    for (const buff of abilityEffect.buffs) {
+                        target.addBuff(buff, this.simulationTime);
+                        let checkBuffExpirationEvent = new CheckBuffExpirationEvent(
+                            this.simulationTime + buff.duration,
+                            target
+                        );
+                        this.eventQueue.addEvent(checkBuffExpirationEvent);
+                    }
+                }
+
+                if (abilityEffect.damageOverTimeRatio > 0 && attackResult.damageDone > 0) {
+                    let damageOverTimeEvent = new DamageOverTimeEvent(
+                        this.simulationTime + DOT_TICK_INTERVAL,
+                        source,
+                        target,
+                        attackResult.damageDone * abilityEffect.damageOverTimeRatio,
+                        abilityEffect.damageOverTimeDuration / DOT_TICK_INTERVAL,
+                        1, abilityEffect.combatStyleHrid
+                    );
+                    this.eventQueue.addEvent(damageOverTimeEvent);
+                }
+
+                if (attackResult.didHit && abilityEffect.stunChance > 0 && Math.random() < (abilityEffect.stunChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.isStunned = true;
+                    target.stunExpireTime = this.simulationTime + abilityEffect.stunDuration;
+                    this.eventQueue.clearMatching((event) => (event.type == AutoAttackEvent.type || event.type == AbilityCastEndEvent.type || event.type == StunExpirationEvent.type) && event.source == target);
+                    let stunExpirationEvent = new StunExpirationEvent(target.stunExpireTime, target);
+                    this.eventQueue.addEvent(stunExpirationEvent);
+                }
+
+                if (attackResult.didHit && abilityEffect.blindChance > 0 && Math.random() < (abilityEffect.blindChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.isBlinded = true;
+                    target.blindExpireTime = this.simulationTime + abilityEffect.blindDuration;
+                    this.eventQueue.clearMatching((event) => event.type == BlindExpirationEvent.type && event.source == target)
+                    if (this.eventQueue.clearMatching((event) => event.type == AutoAttackEvent.type && event.source == target)) {
+                        // console.log("Blind " + (this.simulationTime / 1000000000));
+                        this.addNextAttackEvent(target);
+                    }
+                    let blindExpirationEvent = new BlindExpirationEvent(target.blindExpireTime, target);
+                    this.eventQueue.addEvent(blindExpirationEvent);
+                }
+
+                if (attackResult.didHit && abilityEffect.silenceChance > 0 && Math.random() < (abilityEffect.silenceChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.isSilenced = true;
+                    target.silenceExpireTime = this.simulationTime + abilityEffect.silenceDuration;
+                    this.eventQueue.clearMatching((event) => event.type == SilenceExpirationEvent.type && event.source == target)
+                    if (this.eventQueue.clearMatching((event) => event.type == AbilityCastEndEvent.type && event.source == target)) {
+                        // console.log("Silence " + (this.simulationTime / 1000000000));
+                        this.addNextAttackEvent(target);
+                    }
+                    let silenceExpirationEvent = new SilenceExpirationEvent(target.silenceExpireTime, target);
+                    this.eventQueue.addEvent(silenceExpirationEvent);
+                }
+
+                if (attackResult.didHit && source.combatDetails.combatStats.curse > 0 && Math.random() < (100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.curseExpireTime = this.simulationTime + 15000000000;
+                    if (target.combatDetails.combatStats.damageTaken < 0.1) {
+                        target.combatDetails.combatStats.damageTaken += 0.01;
+                    }
+                    this.eventQueue.clearMatching((event) => event.type == CurseExpirationEvent.type && event.source == target)
+                    let curseExpirationEvent = new CurseExpirationEvent(target.curseExpireTime, target);
+                    this.eventQueue.addEvent(curseExpirationEvent);
+                }
+
+                this.simResult.addAttack(
                     source,
                     target,
-                    attackResult.damageDone * abilityEffect.damageOverTimeRatio,
-                    abilityEffect.damageOverTimeDuration / DOT_TICK_INTERVAL,
-                    1, abilityEffect.combatStyleHrid
+                    ability.hrid,
+                    attackResult.didHit ? attackResult.damageDone : "miss"
                 );
-                this.eventQueue.addEvent(damageOverTimeEvent);
-            }
 
-            if (attackResult.didHit && abilityEffect.stunChance > 0 && Math.random() < (abilityEffect.stunChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
-                target.isStunned = true;
-                target.stunExpireTime = this.simulationTime + abilityEffect.stunDuration;
-                this.eventQueue.clearMatching((event) => (event.type == AutoAttackEvent.type || event.type == AbilityCastEndEvent.type || event.type == StunExpirationEvent.type) && event.source == target);
-                let stunExpirationEvent = new StunExpirationEvent(target.stunExpireTime, target);
-                this.eventQueue.addEvent(stunExpirationEvent);
-            }
-
-            if (attackResult.didHit && abilityEffect.blindChance > 0 && Math.random() < (abilityEffect.blindChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
-                target.isBlinded = true;
-                target.blindExpireTime = this.simulationTime + abilityEffect.blindDuration;
-                this.eventQueue.clearMatching((event) => event.type == BlindExpirationEvent.type && event.source == target)
-                if (this.eventQueue.clearMatching((event) => event.type == AutoAttackEvent.type && event.source == target)) {
-                    // console.log("Blind " + (this.simulationTime / 1000000000));
-                    this.addNextAttackEvent(target);
+                if (attackResult.reflectDamageDone > 0) {
+                    this.simResult.addAttack(target, source, "physicalReflect", attackResult.reflectDamageDone);
                 }
-                let blindExpirationEvent = new BlindExpirationEvent(target.blindExpireTime, target);
-                this.eventQueue.addEvent(blindExpirationEvent);
-            }
 
-            if (attackResult.didHit && abilityEffect.silenceChance > 0 && Math.random() < (abilityEffect.silenceChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
-                target.isSilenced = true;
-                target.silenceExpireTime = this.simulationTime + abilityEffect.silenceDuration;
-                this.eventQueue.clearMatching((event) => event.type == SilenceExpirationEvent.type && event.source == target)
-                if (this.eventQueue.clearMatching((event) => event.type == AbilityCastEndEvent.type && event.source == target)) {
-                    // console.log("Silence " + (this.simulationTime / 1000000000));
-                    this.addNextAttackEvent(target);
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
+                    this.simResult.addExperienceGain(source, skill, xp);
                 }
-                let silenceExpirationEvent = new SilenceExpirationEvent(target.silenceExpireTime, target);
-                this.eventQueue.addEvent(silenceExpirationEvent);
-            }
-
-            this.simResult.addAttack(
-                source,
-                target,
-                ability.hrid,
-                attackResult.didHit ? attackResult.damageDone : "miss"
-            );
-
-            if (attackResult.reflectDamageDone > 0) {
-                this.simResult.addAttack(target, source, "physicalReflect", attackResult.reflectDamageDone);
-            }
-
-            for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
-                this.simResult.addExperienceGain(source, skill, xp);
-            }
-            for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
-                this.simResult.addExperienceGain(target, skill, xp);
-            }
-
-            if (target.combatDetails.currentHitpoints == 0) {
-                this.eventQueue.clearEventsForUnit(target);
-                this.simResult.addDeath(target);
-                if (!target.isPlayer) {
-                    this.simResult.updateTimeSpentAlive(target.hrid, false, this.simulationTime);
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
+                    this.simResult.addExperienceGain(target, skill, xp);
                 }
-                // console.log(target.hrid, "died");
+
+                if (target.combatDetails.currentHitpoints == 0) {
+                    this.eventQueue.clearEventsForUnit(target);
+                    this.simResult.addDeath(target);
+                    if (!target.isPlayer) {
+                        this.simResult.updateTimeSpentAlive(target.hrid, false, this.simulationTime);
+                    }
+                    // console.log(target.hrid, "died");
+                }
             }
         }
     }

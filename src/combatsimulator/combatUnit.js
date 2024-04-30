@@ -6,6 +6,7 @@ class CombatUnit {
     blindExpireTime = null;
     isSilenced = false;
     silenceExpireTime = null;
+    curseExpiretime = null;
 
     // Base levels which don't change after initialization
     staminaLevel = 1;
@@ -333,6 +334,8 @@ class CombatUnit {
         this.silenceExpireTime = null;
         this.isBlinded = false;
         this.blindExpireTime = null;
+        this.combatDetails.combatStats.damageTaken = 0;
+        this.curseExpireTime = null;
     }
 
     getBuffBoosts(type) {

@@ -180,9 +180,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _events_stunExpirationEvent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./events/stunExpirationEvent */ "./src/combatsimulator/events/stunExpirationEvent.js");
 /* harmony import */ var _events_blindExpirationEvent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./events/blindExpirationEvent */ "./src/combatsimulator/events/blindExpirationEvent.js");
 /* harmony import */ var _events_silenceExpirationEvent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./events/silenceExpirationEvent */ "./src/combatsimulator/events/silenceExpirationEvent.js");
-/* harmony import */ var _simResult__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./simResult */ "./src/combatsimulator/simResult.js");
-/* harmony import */ var _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./events/abilityCastEndEvent */ "./src/combatsimulator/events/abilityCastEndEvent.js");
-/* harmony import */ var _events_awaitCooldownEvent__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./events/awaitCooldownEvent */ "./src/combatsimulator/events/awaitCooldownEvent.js");
+/* harmony import */ var _events_curseExpirationEvent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./events/curseExpirationEvent */ "./src/combatsimulator/events/curseExpirationEvent.js");
+/* harmony import */ var _simResult__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./simResult */ "./src/combatsimulator/simResult.js");
+/* harmony import */ var _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./events/abilityCastEndEvent */ "./src/combatsimulator/events/abilityCastEndEvent.js");
+/* harmony import */ var _events_awaitCooldownEvent__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./events/awaitCooldownEvent */ "./src/combatsimulator/events/awaitCooldownEvent.js");
+
 
 
 
@@ -215,7 +217,7 @@ class CombatSimulator extends EventTarget {
         this.zone = zone;
 
         this.eventQueue = new _events_eventQueue__WEBPACK_IMPORTED_MODULE_8__["default"]();
-        this.simResult = new _simResult__WEBPACK_IMPORTED_MODULE_14__["default"]();
+        this.simResult = new _simResult__WEBPACK_IMPORTED_MODULE_15__["default"]();
     }
 
     async simulate(simulationTimeLimit) {
@@ -264,7 +266,7 @@ class CombatSimulator extends EventTarget {
     reset() {
         this.simulationTime = 0;
         this.eventQueue.clear();
-        this.simResult = new _simResult__WEBPACK_IMPORTED_MODULE_14__["default"]();
+        this.simResult = new _simResult__WEBPACK_IMPORTED_MODULE_15__["default"]();
     }
 
     async processEvent(event) {
@@ -306,10 +308,13 @@ class CombatSimulator extends EventTarget {
             case _events_silenceExpirationEvent__WEBPACK_IMPORTED_MODULE_13__["default"].type:
                 this.processSilenceExpirationEvent(event);
                 break;
-            case _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__["default"].type:
+            case _events_curseExpirationEvent__WEBPACK_IMPORTED_MODULE_14__["default"].type:
+                this.processCurseExpirationEvent(event);
+                break;
+            case _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__["default"].type:
                 this.tryUseAbility(event.source, event.ability);
                 break;
-            case _events_awaitCooldownEvent__WEBPACK_IMPORTED_MODULE_16__["default"].type:
+            case _events_awaitCooldownEvent__WEBPACK_IMPORTED_MODULE_17__["default"].type:
                 // console.log("Await CD " + (this.simulationTime / 1000000000));
                 this.addNextAttackEvent(event.source);
                 break;
@@ -384,29 +389,48 @@ class CombatSimulator extends EventTarget {
         }
 
         for (let target of targets) {
-            let attackResult = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].processAttack(event.source, target);
+
+            let source = event.source;
+
+            if (target.combatDetails.combatStats.parry > Math.random()) {
+                let temp = source;
+                source = target;
+                target = temp;
+            }
+
+            let attackResult = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].processAttack(source, target);
+
+            if (attackResult.didHit && source.combatDetails.combatStats.curse > 0 && Math.random() < (100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                target.curseExpireTime = this.simulationTime + 15000000000;
+                if (target.combatDetails.combatStats.damageTaken < 0.1) {
+                    target.combatDetails.combatStats.damageTaken += 0.01;
+                }
+                this.eventQueue.clearMatching((event) => event.type == _events_curseExpirationEvent__WEBPACK_IMPORTED_MODULE_14__["default"].type && event.source == target)
+                let curseExpirationEvent = new _events_curseExpirationEvent__WEBPACK_IMPORTED_MODULE_14__["default"](target.curseExpireTime, target);
+                this.eventQueue.addEvent(curseExpirationEvent);
+            }
 
             this.simResult.addAttack(
-                event.source,
+                source,
                 target,
                 "autoAttack",
                 attackResult.didHit ? attackResult.damageDone : "miss"
             );
 
             if (attackResult.lifeStealHeal > 0) {
-                this.simResult.addHitpointsGained(event.source, "lifesteal", attackResult.lifeStealHeal);
+                this.simResult.addHitpointsGained(source, "lifesteal", attackResult.lifeStealHeal);
             }
 
             if (attackResult.manaLeechMana > 0) {
-                this.simResult.addManapointsGained(event.source, "manaLeech", attackResult.manaLeechMana);
+                this.simResult.addManapointsGained(source, "manaLeech", attackResult.manaLeechMana);
             }
 
             if (attackResult.reflectDamageDone > 0) {
-                this.simResult.addAttack(target, event.source, "physicalReflect", attackResult.reflectDamageDone);
+                this.simResult.addAttack(target, source, "physicalReflect", attackResult.reflectDamageDone);
             }
 
             for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
-                this.simResult.addExperienceGain(event.source, skill, xp);
+                this.simResult.addExperienceGain(source, skill, xp);
             }
             for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
                 this.simResult.addExperienceGain(target, skill, xp);
@@ -422,16 +446,20 @@ class CombatSimulator extends EventTarget {
             }
 
             // Could die from reflect damage
-            if (event.source.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
-                this.eventQueue.clearEventsForUnit(event.source);
-                this.simResult.addDeath(event.source);
-                if (!event.source.isPlayer) {
-                    this.simResult.updateTimeSpentAlive(event.source.hrid, false, this.simulationTime);
+            if (source.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
+                this.eventQueue.clearEventsForUnit(source);
+                this.simResult.addDeath(source);
+                if (!source.isPlayer) {
+                    this.simResult.updateTimeSpentAlive(source.hrid, false, this.simulationTime);
                 }
                 break;
             }
 
-            if (!attackResult.didHit || event.source.combatDetails.combatStats.pierce <= Math.random()) {
+            if (!attackResult.didHit && source.combatDetails.combatStats.mayhem > Math.random()) {
+                continue;
+            }
+
+            if (!attackResult.didHit || source.combatDetails.combatStats.pierce <= Math.random()) {
                 break;
             }
         }
@@ -447,7 +475,7 @@ class CombatSimulator extends EventTarget {
 
         if (this.enemies && !this.enemies.some((enemy) => enemy.combatDetails.currentHitpoints > 0)) {
             this.eventQueue.clearEventsOfType(_events_autoAttackEvent__WEBPACK_IMPORTED_MODULE_1__["default"].type);
-            this.eventQueue.clearEventsOfType(_events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__["default"].type);
+            this.eventQueue.clearEventsOfType(_events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__["default"].type);
             let enemyRespawnEvent = new _events_enemyRespawnEvent__WEBPACK_IMPORTED_MODULE_7__["default"](this.simulationTime + ENEMY_RESPAWN_INTERVAL);
             this.eventQueue.addEvent(enemyRespawnEvent);
             this.enemies = null;
@@ -464,7 +492,7 @@ class CombatSimulator extends EventTarget {
             !this.eventQueue.containsEventOfType(_events_playerRespawnEvent__WEBPACK_IMPORTED_MODULE_9__["default"].type)
         ) {
             this.eventQueue.clearEventsOfType(_events_autoAttackEvent__WEBPACK_IMPORTED_MODULE_1__["default"].type);
-            this.eventQueue.clearEventsOfType(_events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__["default"].type);
+            this.eventQueue.clearEventsOfType(_events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__["default"].type);
             // 120 seconds respawn and 30 seconds traveling to battle
             let playerRespawnEvent = new _events_playerRespawnEvent__WEBPACK_IMPORTED_MODULE_9__["default"](this.simulationTime + PLAYER_RESPAWN_INTERVAL);
             this.eventQueue.addEvent(playerRespawnEvent);
@@ -498,7 +526,7 @@ class CombatSimulator extends EventTarget {
                 if (!usedAbility && ability.shouldTrigger(this.simulationTime, source, target, friendlies, enemies) && this.canUseAbility(source, ability, true)) {
                     let castDuration = ability.castDuration;
                     castDuration /= (1 + source.combatDetails.combatStats.castSpeed)
-                    let abilityCastEndEvent = new _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__["default"](this.simulationTime + castDuration, source, ability);
+                    let abilityCastEndEvent = new _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__["default"](this.simulationTime + castDuration, source, ability);
                     this.eventQueue.addEvent(abilityCastEndEvent);
                     /*-if (source.isPlayer) {
                         let haste = source.combatDetails.combatStats.abilityHaste;
@@ -559,7 +587,7 @@ class CombatSimulator extends EventTarget {
                 }*/
                 this.eventQueue.addEvent(autoAttackEvent);
             } else {
-                let awaitCooldownEvent = new _events_awaitCooldownEvent__WEBPACK_IMPORTED_MODULE_16__["default"](
+                let awaitCooldownEvent = new _events_awaitCooldownEvent__WEBPACK_IMPORTED_MODULE_17__["default"](
                     nextCast,
                     source
                 );
@@ -693,6 +721,10 @@ class CombatSimulator extends EventTarget {
 
     processSilenceExpirationEvent(event) {
         event.source.isSilenced = false;
+    }
+
+    processCurseExpirationEvent(event) {
+        event.source.damageTaken = 0;
     }
 
     checkTriggers() {
@@ -924,88 +956,150 @@ class CombatSimulator extends EventTarget {
         }
 
         for (const target of targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0)) {
-            let attackResult = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].processAttack(source, target, abilityEffect);
+            if (target.combatDetails.combatStats.parry > Math.random()) {
+                let tempTarget = source;
+                let tempSource = target;
 
-            if (attackResult.didHit && abilityEffect.buffs) {
-                for (const buff of abilityEffect.buffs) {
-                    target.addBuff(buff, this.simulationTime);
-                    let checkBuffExpirationEvent = new _events_checkBuffExpirationEvent__WEBPACK_IMPORTED_MODULE_3__["default"](
-                        this.simulationTime + buff.duration,
-                        target
-                    );
-                    this.eventQueue.addEvent(checkBuffExpirationEvent);
+                let attackResult = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].processAttack(tempSource, tempTarget);
+
+                this.simResult.addAttack(
+                    tempSource,
+                    tempTarget,
+                    "autoAttack",
+                    attackResult.didHit ? attackResult.damageDone : "miss"
+                );
+
+                if (attackResult.lifeStealHeal > 0) {
+                    this.simResult.addHitpointsGained(tempSource, "lifesteal", attackResult.lifeStealHeal);
                 }
-            }
 
-            if (abilityEffect.damageOverTimeRatio > 0 && attackResult.damageDone > 0) {
-                let damageOverTimeEvent = new _events_damageOverTimeEvent__WEBPACK_IMPORTED_MODULE_2__["default"](
-                    this.simulationTime + DOT_TICK_INTERVAL,
+                if (attackResult.manaLeechMana > 0) {
+                    this.simResult.addManapointsGained(tempSource, "manaLeech", attackResult.manaLeechMana);
+                }
+
+                if (attackResult.reflectDamageDone > 0) {
+                    this.simResult.addAttack(tempTarget, tempSource, "physicalReflect", attackResult.reflectDamageDone);
+                }
+
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
+                    this.simResult.addExperienceGain(tempSource, skill, xp);
+                }
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
+                    this.simResult.addExperienceGain(tempTarget, skill, xp);
+                }
+
+                if (tempTarget.combatDetails.currentHitpoints == 0) {
+                    this.eventQueue.clearEventsForUnit(tempTarget);
+                    this.simResult.addDeath(tempTarget);
+                    if (!tempTarget.isPlayer) {
+                        this.simResult.updateTimeSpentAlive(tempTarget.hrid, false, this.simulationTime);
+                    }
+                    // console.log(tempTarget.hrid, "died");
+                }
+
+                // Could die from reflect damage
+                if (tempSource.combatDetails.currentHitpoints == 0 && attackResult.reflectDamageDone != 0) {
+                    this.eventQueue.clearEventsForUnit(tempSource);
+                    this.simResult.addDeath(tempSource);
+                    if (!tempSource.isPlayer) {
+                        this.simResult.updateTimeSpentAlive(tempSource.hrid, false, this.simulationTime);
+                    }
+                    break;
+                }
+            } else {
+                let attackResult = _combatUtilities__WEBPACK_IMPORTED_MODULE_0__["default"].processAttack(source, target, abilityEffect);
+
+                if (attackResult.didHit && abilityEffect.buffs) {
+                    for (const buff of abilityEffect.buffs) {
+                        target.addBuff(buff, this.simulationTime);
+                        let checkBuffExpirationEvent = new _events_checkBuffExpirationEvent__WEBPACK_IMPORTED_MODULE_3__["default"](
+                            this.simulationTime + buff.duration,
+                            target
+                        );
+                        this.eventQueue.addEvent(checkBuffExpirationEvent);
+                    }
+                }
+
+                if (abilityEffect.damageOverTimeRatio > 0 && attackResult.damageDone > 0) {
+                    let damageOverTimeEvent = new _events_damageOverTimeEvent__WEBPACK_IMPORTED_MODULE_2__["default"](
+                        this.simulationTime + DOT_TICK_INTERVAL,
+                        source,
+                        target,
+                        attackResult.damageDone * abilityEffect.damageOverTimeRatio,
+                        abilityEffect.damageOverTimeDuration / DOT_TICK_INTERVAL,
+                        1, abilityEffect.combatStyleHrid
+                    );
+                    this.eventQueue.addEvent(damageOverTimeEvent);
+                }
+
+                if (attackResult.didHit && abilityEffect.stunChance > 0 && Math.random() < (abilityEffect.stunChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.isStunned = true;
+                    target.stunExpireTime = this.simulationTime + abilityEffect.stunDuration;
+                    this.eventQueue.clearMatching((event) => (event.type == _events_autoAttackEvent__WEBPACK_IMPORTED_MODULE_1__["default"].type || event.type == _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__["default"].type || event.type == _events_stunExpirationEvent__WEBPACK_IMPORTED_MODULE_11__["default"].type) && event.source == target);
+                    let stunExpirationEvent = new _events_stunExpirationEvent__WEBPACK_IMPORTED_MODULE_11__["default"](target.stunExpireTime, target);
+                    this.eventQueue.addEvent(stunExpirationEvent);
+                }
+
+                if (attackResult.didHit && abilityEffect.blindChance > 0 && Math.random() < (abilityEffect.blindChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.isBlinded = true;
+                    target.blindExpireTime = this.simulationTime + abilityEffect.blindDuration;
+                    this.eventQueue.clearMatching((event) => event.type == _events_blindExpirationEvent__WEBPACK_IMPORTED_MODULE_12__["default"].type && event.source == target)
+                    if (this.eventQueue.clearMatching((event) => event.type == _events_autoAttackEvent__WEBPACK_IMPORTED_MODULE_1__["default"].type && event.source == target)) {
+                        // console.log("Blind " + (this.simulationTime / 1000000000));
+                        this.addNextAttackEvent(target);
+                    }
+                    let blindExpirationEvent = new _events_blindExpirationEvent__WEBPACK_IMPORTED_MODULE_12__["default"](target.blindExpireTime, target);
+                    this.eventQueue.addEvent(blindExpirationEvent);
+                }
+
+                if (attackResult.didHit && abilityEffect.silenceChance > 0 && Math.random() < (abilityEffect.silenceChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.isSilenced = true;
+                    target.silenceExpireTime = this.simulationTime + abilityEffect.silenceDuration;
+                    this.eventQueue.clearMatching((event) => event.type == _events_silenceExpirationEvent__WEBPACK_IMPORTED_MODULE_13__["default"].type && event.source == target)
+                    if (this.eventQueue.clearMatching((event) => event.type == _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_16__["default"].type && event.source == target)) {
+                        // console.log("Silence " + (this.simulationTime / 1000000000));
+                        this.addNextAttackEvent(target);
+                    }
+                    let silenceExpirationEvent = new _events_silenceExpirationEvent__WEBPACK_IMPORTED_MODULE_13__["default"](target.silenceExpireTime, target);
+                    this.eventQueue.addEvent(silenceExpirationEvent);
+                }
+
+                if (attackResult.didHit && source.combatDetails.combatStats.curse > 0 && Math.random() < (100 / (100 + target.combatDetails.combatStats.tenacity))) {
+                    target.curseExpireTime = this.simulationTime + 15000000000;
+                    if (target.combatDetails.combatStats.damageTaken < 0.1) {
+                        target.combatDetails.combatStats.damageTaken += 0.01;
+                    }
+                    this.eventQueue.clearMatching((event) => event.type == _events_curseExpirationEvent__WEBPACK_IMPORTED_MODULE_14__["default"].type && event.source == target)
+                    let curseExpirationEvent = new _events_curseExpirationEvent__WEBPACK_IMPORTED_MODULE_14__["default"](target.curseExpireTime, target);
+                    this.eventQueue.addEvent(curseExpirationEvent);
+                }
+
+                this.simResult.addAttack(
                     source,
                     target,
-                    attackResult.damageDone * abilityEffect.damageOverTimeRatio,
-                    abilityEffect.damageOverTimeDuration / DOT_TICK_INTERVAL,
-                    1, abilityEffect.combatStyleHrid
+                    ability.hrid,
+                    attackResult.didHit ? attackResult.damageDone : "miss"
                 );
-                this.eventQueue.addEvent(damageOverTimeEvent);
-            }
 
-            if (attackResult.didHit && abilityEffect.stunChance > 0 && Math.random() < (abilityEffect.stunChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
-                target.isStunned = true;
-                target.stunExpireTime = this.simulationTime + abilityEffect.stunDuration;
-                this.eventQueue.clearMatching((event) => (event.type == _events_autoAttackEvent__WEBPACK_IMPORTED_MODULE_1__["default"].type || event.type == _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__["default"].type || event.type == _events_stunExpirationEvent__WEBPACK_IMPORTED_MODULE_11__["default"].type) && event.source == target);
-                let stunExpirationEvent = new _events_stunExpirationEvent__WEBPACK_IMPORTED_MODULE_11__["default"](target.stunExpireTime, target);
-                this.eventQueue.addEvent(stunExpirationEvent);
-            }
-
-            if (attackResult.didHit && abilityEffect.blindChance > 0 && Math.random() < (abilityEffect.blindChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
-                target.isBlinded = true;
-                target.blindExpireTime = this.simulationTime + abilityEffect.blindDuration;
-                this.eventQueue.clearMatching((event) => event.type == _events_blindExpirationEvent__WEBPACK_IMPORTED_MODULE_12__["default"].type && event.source == target)
-                if (this.eventQueue.clearMatching((event) => event.type == _events_autoAttackEvent__WEBPACK_IMPORTED_MODULE_1__["default"].type && event.source == target)) {
-                    // console.log("Blind " + (this.simulationTime / 1000000000));
-                    this.addNextAttackEvent(target);
+                if (attackResult.reflectDamageDone > 0) {
+                    this.simResult.addAttack(target, source, "physicalReflect", attackResult.reflectDamageDone);
                 }
-                let blindExpirationEvent = new _events_blindExpirationEvent__WEBPACK_IMPORTED_MODULE_12__["default"](target.blindExpireTime, target);
-                this.eventQueue.addEvent(blindExpirationEvent);
-            }
 
-            if (attackResult.didHit && abilityEffect.silenceChance > 0 && Math.random() < (abilityEffect.silenceChance * 100 / (100 + target.combatDetails.combatStats.tenacity))) {
-                target.isSilenced = true;
-                target.silenceExpireTime = this.simulationTime + abilityEffect.silenceDuration;
-                this.eventQueue.clearMatching((event) => event.type == _events_silenceExpirationEvent__WEBPACK_IMPORTED_MODULE_13__["default"].type && event.source == target)
-                if (this.eventQueue.clearMatching((event) => event.type == _events_abilityCastEndEvent__WEBPACK_IMPORTED_MODULE_15__["default"].type && event.source == target)) {
-                    // console.log("Silence " + (this.simulationTime / 1000000000));
-                    this.addNextAttackEvent(target);
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
+                    this.simResult.addExperienceGain(source, skill, xp);
                 }
-                let silenceExpirationEvent = new _events_silenceExpirationEvent__WEBPACK_IMPORTED_MODULE_13__["default"](target.silenceExpireTime, target);
-                this.eventQueue.addEvent(silenceExpirationEvent);
-            }
-
-            this.simResult.addAttack(
-                source,
-                target,
-                ability.hrid,
-                attackResult.didHit ? attackResult.damageDone : "miss"
-            );
-
-            if (attackResult.reflectDamageDone > 0) {
-                this.simResult.addAttack(target, source, "physicalReflect", attackResult.reflectDamageDone);
-            }
-
-            for (const [skill, xp] of Object.entries(attackResult.experienceGained.source)) {
-                this.simResult.addExperienceGain(source, skill, xp);
-            }
-            for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
-                this.simResult.addExperienceGain(target, skill, xp);
-            }
-
-            if (target.combatDetails.currentHitpoints == 0) {
-                this.eventQueue.clearEventsForUnit(target);
-                this.simResult.addDeath(target);
-                if (!target.isPlayer) {
-                    this.simResult.updateTimeSpentAlive(target.hrid, false, this.simulationTime);
+                for (const [skill, xp] of Object.entries(attackResult.experienceGained.target)) {
+                    this.simResult.addExperienceGain(target, skill, xp);
                 }
-                // console.log(target.hrid, "died");
+
+                if (target.combatDetails.currentHitpoints == 0) {
+                    this.eventQueue.clearEventsForUnit(target);
+                    this.simResult.addDeath(target);
+                    if (!target.isPlayer) {
+                        this.simResult.updateTimeSpentAlive(target.hrid, false, this.simulationTime);
+                    }
+                    // console.log(target.hrid, "died");
+                }
             }
         }
     }
@@ -1120,6 +1214,7 @@ class CombatUnit {
     blindExpireTime = null;
     isSilenced = false;
     silenceExpireTime = null;
+    curseExpiretime = null;
 
     // Base levels which don't change after initialization
     staminaLevel = 1;
@@ -1447,6 +1542,8 @@ class CombatUnit {
         this.silenceExpireTime = null;
         this.isBlinded = false;
         this.blindExpireTime = null;
+        this.combatDetails.combatStats.damageTaken = 0;
+        this.curseExpireTime = null;
     }
 
     getBuffBoosts(type) {
@@ -1712,6 +1809,7 @@ class CombatUtilities {
 
         let damageRoll = CombatUtilities.randomInt(sourceMinDamage, sourceMaxDamage);
         damageRoll *= (1 + source.combatDetails.combatStats.taskDamage);
+        damageRoll *= (1 + target.combatDetails.combatStats.damageTaken);
         let maxPremitigatedDamage = Math.min(damageRoll, target.combatDetails.currentHitpoints);
 
         let damageDone = 0;
@@ -2347,6 +2445,33 @@ class CooldownReadyEvent extends _combatEvent__WEBPACK_IMPORTED_MODULE_0__["defa
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CooldownReadyEvent);
 
+
+/***/ }),
+
+/***/ "./src/combatsimulator/events/curseExpirationEvent.js":
+/*!************************************************************!*\
+  !*** ./src/combatsimulator/events/curseExpirationEvent.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _combatEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./combatEvent */ "./src/combatsimulator/events/combatEvent.js");
+
+
+class CurseExpirationEvent extends _combatEvent__WEBPACK_IMPORTED_MODULE_0__["default"] {
+    static type = "curseExpiration";
+
+    constructor(time, source) {
+        super(CurseExpirationEvent.type, time);
+
+        this.source = source;
+    }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CurseExpirationEvent);
 
 /***/ }),
 
@@ -3211,7 +3336,6 @@ class Trigger {
             case "/combat_trigger_conditions/sylvan_aura_nature_amplify":
             case "/combat_trigger_conditions/sylvan_aura_nature_resistance":
             case "/combat_trigger_conditions/taunt":
-            case "/combat_trigger_conditions/curse":
                 let buffHrid = "/buff_uniques";
                 buffHrid += this.conditionHrid.slice(this.conditionHrid.lastIndexOf("/"));
                 return source.combatBuffs[buffHrid];
@@ -3231,6 +3355,8 @@ class Trigger {
                 return source.isBlinded || source.blindExpireTime == currentTime;
             case "/combat_trigger_conditions/silence_status":
                 return source.isSilenced || source.silenceExpireTime == currentTime;
+            case "/combat_trigger_conditions/curse":
+                return source.combatDetails.combatStats.damageTaken > 0 || source.curseExpireTime == currentTime;
             default:
                 throw new Error("Unknown conditionHrid in trigger: " + this.conditionHrid);
         }
