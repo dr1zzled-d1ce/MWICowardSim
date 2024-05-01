@@ -196,6 +196,11 @@ class CombatSimulator extends EventTarget {
         // console.log("aa " + (this.simulationTime / 1000000000));
 
         let targets = event.source.isPlayer ? this.enemies : this.players;
+
+        if (!targets) {
+            return;
+        }
+
         targets = targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0);
 
         if (!targets || targets.length == 0) {

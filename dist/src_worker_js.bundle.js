@@ -382,6 +382,11 @@ class CombatSimulator extends EventTarget {
         // console.log("aa " + (this.simulationTime / 1000000000));
 
         let targets = event.source.isPlayer ? this.enemies : this.players;
+
+        if (!targets) {
+            return;
+        }
+
         targets = targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0);
 
         if (!targets || targets.length == 0) {
@@ -2952,7 +2957,7 @@ class Player extends _combatUnit__WEBPACK_IMPORTED_MODULE_1__["default"] {
             this.combatDetails.combatStats.attackInterval =
                 this.equipment["/equipment_types/two_hand"].getCombatStat("attackInterval");
             this.combatDetails.combatStats.autoAttackDamage =
-                this.equipment["/equipment_types/main_hand"].getCombatStat("autoAttackDamage");
+                this.equipment["/equipment_types/two_hand"].getCombatStat("autoAttackDamage");
         } else {
             this.combatDetails.combatStats.combatStyleHrid = "/combat_styles/smash";
             this.combatDetails.combatStats.damageType = "/damage_types/physical";
@@ -3488,6 +3493,7 @@ onmessage = async function (event) {
                 let simResult = await combatSimulator.simulate(simulationTimeLimit);
                 this.postMessage({ type: "simulation_result", simResult: simResult });
             } catch (e) {
+                console.log(e);
                 this.postMessage({ type: "simulation_error", error: e });
             }
             break;

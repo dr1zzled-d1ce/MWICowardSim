@@ -880,7 +880,7 @@ class Player extends _combatUnit__WEBPACK_IMPORTED_MODULE_1__["default"] {
             this.combatDetails.combatStats.attackInterval =
                 this.equipment["/equipment_types/two_hand"].getCombatStat("attackInterval");
             this.combatDetails.combatStats.autoAttackDamage =
-                this.equipment["/equipment_types/main_hand"].getCombatStat("autoAttackDamage");
+                this.equipment["/equipment_types/two_hand"].getCombatStat("autoAttackDamage");
         } else {
             this.combatDetails.combatStats.combatStyleHrid = "/combat_styles/smash";
             this.combatDetails.combatStats.damageType = "/damage_types/physical";
