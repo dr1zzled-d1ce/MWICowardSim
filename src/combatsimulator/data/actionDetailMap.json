@@ -12469,43 +12469,67 @@
                                 "combatMonsterHrid": "/monsters/gobo_stabby",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_slashy",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_smashy",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_shooty",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_boomy",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/novice_sorcerer",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 70
+                                "strength": 60
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gummy_bear",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 80
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/ice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/flame_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/panda",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/black_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
                             }
                         ]
                     },
@@ -12517,43 +12541,91 @@
                                 "combatMonsterHrid": "/monsters/gobo_stabby",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_slashy",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_smashy",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_shooty",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_boomy",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/novice_sorcerer",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 70
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gummy_bear",
                                 "eliteTier": 2,
                                 "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/ice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/flame_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/panda",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/black_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 70
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/grizzly_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
                                 "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/polar_bear",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/zombie",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/vampire",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 110
                             },
                             {
                                 "combatMonsterHrid": "/monsters/rabid_rabbit",
@@ -12571,97 +12643,91 @@
                                 "combatMonsterHrid": "/monsters/gobo_stabby",
                                 "eliteTier": 2,
                                 "rate": 0.5,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_slashy",
                                 "eliteTier": 2,
                                 "rate": 0.5,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_smashy",
                                 "eliteTier": 2,
                                 "rate": 0.5,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_shooty",
                                 "eliteTier": 2,
                                 "rate": 0.5,
-                                "strength": 60
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/gobo_boomy",
                                 "eliteTier": 2,
                                 "rate": 0.5,
-                                "strength": 60
-                            },
-                            {
-                                "combatMonsterHrid": "/monsters/black_bear",
-                                "eliteTier": 2,
-                                "rate": 1,
-                                "strength": 90
+                                "strength": 50
                             },
                             {
                                 "combatMonsterHrid": "/monsters/ice_sorcerer",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 90
+                                "strength": 70
                             },
                             {
                                 "combatMonsterHrid": "/monsters/flame_sorcerer",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 90
+                                "strength": 70
                             },
                             {
                                 "combatMonsterHrid": "/monsters/panda",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 95
+                                "strength": 70
                             },
                             {
                                 "combatMonsterHrid": "/monsters/black_bear",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 95
+                                "strength": 70
                             },
                             {
                                 "combatMonsterHrid": "/monsters/grizzly_bear",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 100
+                                "strength": 80
                             },
                             {
                                 "combatMonsterHrid": "/monsters/polar_bear",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 105
+                                "strength": 80
                             },
                             {
                                 "combatMonsterHrid": "/monsters/elementalist",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 120
+                                "strength": 90
                             },
                             {
                                 "combatMonsterHrid": "/monsters/zombie",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 130
+                                "strength": 90
                             },
                             {
                                 "combatMonsterHrid": "/monsters/vampire",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 140
+                                "strength": 100
                             },
                             {
                                 "combatMonsterHrid": "/monsters/werewolf",
                                 "eliteTier": 2,
                                 "rate": 1,
-                                "strength": 150
+                                "strength": 110
                             },
                             {
                                 "combatMonsterHrid": "/monsters/rabid_rabbit",

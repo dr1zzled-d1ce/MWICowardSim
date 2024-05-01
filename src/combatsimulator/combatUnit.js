@@ -64,6 +64,7 @@ class CombatUnit {
             combatStyleHrid: "/combat_styles/smash",
             damageType: "/damage_types/physical",
             attackInterval: 3000000000,
+            autoAttackDamage: 0,
             criticalRate: 0,
             criticalDamage: 0,
             stabAccuracy: 0,
