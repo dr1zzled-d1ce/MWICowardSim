@@ -211,6 +211,11 @@ class CombatSimulator extends EventTarget {
 
             let source = event.source;
 
+            if(!event.source.isPlayer && Math.random()>(100/(100+1400))) { 
+                this.addNextAttackEvent(event.source);
+                break; 
+            }
+
             if (target.combatDetails.combatStats.parry > Math.random()) {
                 let temp = source;
                 source = target;
@@ -669,7 +674,12 @@ class CombatSimulator extends EventTarget {
         }
 
         // console.log("Casting:", ability);
-
+        if (target.isPlayer) {
+            if(Math.random()>(100/(100+1400))) {
+                return;
+            }
+        }
+        
         if (source.isPlayer) {
             if (source.abilityManaCosts.has(ability.hrid)) {
                 source.abilityManaCosts.set(ability.hrid, source.abilityManaCosts.get(ability.hrid) + ability.manaCost);
