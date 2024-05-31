@@ -259,9 +259,15 @@ class CombatUnit {
             this.combatDetails.totalFireResistance += baseFireResistance * boost.ratioBoost;
         }
 
+        let hpRegenBoosts = this.getBuffBoost("/buff_types/hp_regen");
+        this.combatDetails.combatStats.HPRegen += this.combatDetails.combatStats.HPRegen * hpRegenBoosts.ratioBoost;
+        this.combatDetails.combatStats.HPRegen += hpRegenBoosts.flatBoost;
+
+        let mpRegenBoosts = this.getBuffBoost("/buff_types/mp_regen");
+        this.combatDetails.combatStats.MPRegen += this.combatDetails.combatStats.MPRegen * mpRegenBoosts.ratioBoost;
+        this.combatDetails.combatStats.MPRegen += mpRegenBoosts.flatBoost;
+
         this.combatDetails.combatStats.lifeSteal += this.getBuffBoost("/buff_types/life_steal").flatBoost;
-        this.combatDetails.combatStats.HPRegen += this.getBuffBoost("/buff_types/hp_regen").flatBoost;
-        this.combatDetails.combatStats.MPRegen += this.getBuffBoost("/buff_types/mp_regen").flatBoost;
         this.combatDetails.combatStats.physicalReflectPower += this.getBuffBoost(
             "/buff_types/physical_reflect_power"
         ).flatBoost;

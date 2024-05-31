@@ -15,6 +15,7 @@ class Player extends CombatUnit {
         "/equipment_types/two_hand": null,
         "/equipment_types/off_hand": null,
         "/equipment_types/pouch": null,
+        "/equipment_types/back": null,
     };
 
     constructor() {

@@ -9974,7 +9974,7 @@
                 ],
                 "maxWaves": 50,
                 "randomSpawnInfoMap": {
-                    "1": {
+                    "0": {
                         "maxSpawnCount": 4,
                         "maxTotalStrength": 250,
                         "spawns": [
@@ -10016,7 +10016,7 @@
                             }
                         ]
                     },
-                    "11": {
+                    "10": {
                         "maxSpawnCount": 5,
                         "maxTotalStrength": 300,
                         "spawns": [
@@ -10064,7 +10064,7 @@
                             }
                         ]
                     },
-                    "31": {
+                    "30": {
                         "maxSpawnCount": 5,
                         "maxTotalStrength": 400,
                         "spawns": [
@@ -10335,6 +10335,450 @@
         "maxPartySize": 1,
         "buffs": null,
         "sortIndex": 42
+    },
+    "/actions/combat/enchanted_fortress": {
+        "hrid": "/actions/combat/enchanted_fortress",
+        "function": "/action_functions/combat",
+        "type": "/action_types/combat",
+        "category": "/action_categories/combat/dungeons",
+        "name": "Enchanted Fortress",
+        "levelRequirement": {
+            "skillHrid": "",
+            "level": 0
+        },
+        "baseTimeCost": 3000000000,
+        "experienceGain": {
+            "skillHrid": "",
+            "value": 0
+        },
+        "dropTable": null,
+        "rareDropTable": null,
+        "upgradeItemHrid": "",
+        "inputItems": null,
+        "outputItems": null,
+        "combatZoneInfo": {
+            "isDungeon": true,
+            "fightInfo": {
+                "randomSpawnInfo": {
+                    "maxSpawnCount": 0,
+                    "maxTotalStrength": 0,
+                    "spawns": null
+                },
+                "bossSpawns": null,
+                "battlesPerBoss": 0
+            },
+            "dungeonInfo": {
+                "keyItemHrid": "/items/enchanted_key",
+                "rewardDropTable": [
+                    {
+                        "itemHrid": "/items/enchanted_chest",
+                        "dropRate": 1,
+                        "minCount": 1,
+                        "maxCount": 1,
+                        "minEliteTier": 0
+                    }
+                ],
+                "maxWaves": 65,
+                "randomSpawnInfoMap": {
+                    "0": {
+                        "maxSpawnCount": 4,
+                        "maxTotalStrength": 250,
+                        "spawns": [
+                            {
+                                "combatMonsterHrid": "/monsters/eye",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/eyes",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/veyes",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/novice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/ice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/flame_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/magnetic_golem",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/abyssal_imp",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            }
+                        ]
+                    },
+                    "20": {
+                        "maxSpawnCount": 5,
+                        "maxTotalStrength": 300,
+                        "spawns": [
+                            {
+                                "combatMonsterHrid": "/monsters/eye",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/eyes",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/veyes",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/novice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/ice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/flame_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/magnetic_golem",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/stalactite_golem",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/abyssal_imp",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/soul_hunter",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/enchanted_pawn",
+                                "eliteTier": 0,
+                                "rate": 2,
+                                "strength": 150
+                            }
+                        ]
+                    },
+                    "40": {
+                        "maxSpawnCount": 5,
+                        "maxTotalStrength": 400,
+                        "spawns": [
+                            {
+                                "combatMonsterHrid": "/monsters/eye",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/eyes",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/veyes",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/novice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 50
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/ice_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/flame_sorcerer",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 60
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/magnetic_golem",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/stalactite_golem",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/abyssal_imp",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 80
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/soul_hunter",
+                                "eliteTier": 2,
+                                "rate": 1,
+                                "strength": 90
+                            },
+                            {
+                                "combatMonsterHrid": "/monsters/enchanted_pawn",
+                                "eliteTier": 0,
+                                "rate": 3,
+                                "strength": 150
+                            }
+                        ]
+                    }
+                },
+                "fixedSpawnsMap": {
+                    "5": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_pawn",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "10": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_pawn",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_pawn",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "15": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_knight",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "20": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_bishop",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "25": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_rook",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "30": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_knight",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_bishop",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "35": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_bishop",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_rook",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "40": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_rook",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_knight",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "45": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_knight",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_pawn",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_bishop",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "50": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_bishop",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_pawn",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_rook",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "55": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_rook",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_pawn",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_knight",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "60": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_knight",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_bishop",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_rook",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ],
+                    "65": [
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_queen",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        },
+                        {
+                            "combatMonsterHrid": "/monsters/enchanted_king",
+                            "eliteTier": 0,
+                            "rate": 0,
+                            "strength": 0
+                        }
+                    ]
+                }
+            }
+        },
+        "maxPartySize": 5,
+        "buffs": [
+            {
+                "uniqueHrid": "/buff_uniques/experience_action_buff",
+                "typeHrid": "/buff_types/wisdom",
+                "ratioBoost": 0,
+                "ratioBoostLevelBonus": 0,
+                "flatBoost": 0.2,
+                "flatBoostLevelBonus": 0,
+                "startTime": "0001-01-01T00:00:00Z",
+                "duration": 0
+            }
+        ],
+        "sortIndex": 69
     },
     "/actions/combat/eye": {
         "hrid": "/actions/combat/eye",
@@ -12461,7 +12905,7 @@
                 ],
                 "maxWaves": 60,
                 "randomSpawnInfoMap": {
-                    "1": {
+                    "0": {
                         "maxSpawnCount": 4,
                         "maxTotalStrength": 250,
                         "spawns": [
@@ -12533,7 +12977,7 @@
                             }
                         ]
                     },
-                    "16": {
+                    "15": {
                         "maxSpawnCount": 5,
                         "maxTotalStrength": 300,
                         "spawns": [
