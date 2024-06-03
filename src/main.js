@@ -344,7 +344,8 @@ function updateCombatStatsUI() {
         "parry",
         "mayhem",
         "pierce",
-        "curse"
+        "curse",
+        "attackSpeed"
     ].forEach((stat) => {
         let element = document.getElementById("combatStat_" + stat);
         let value = (100 * player.combatDetails.combatStats[stat]).toLocaleString([], {
@@ -485,7 +486,7 @@ function initAbilitiesSection() {
 
         let gameAbilities;
         if (i == 0) {
-            gameAbilities = Object.values(abilityDetailMap).filter(x => x.isSpecialAbility).sort((a, b) => a.sortIndex - b.sortIndex);
+            gameAbilities = Object.values(abilityDetailMap).filter(x => x.isSpecialAbility && x.name !== "Promote").sort((a, b) => a.sortIndex - b.sortIndex);
         } else {
             gameAbilities = Object.values(abilityDetailMap).filter(x => !x.isSpecialAbility).sort((a, b) => a.sortIndex - b.sortIndex);
         }

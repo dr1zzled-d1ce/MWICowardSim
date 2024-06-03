@@ -25355,11 +25355,11 @@
                 "count": 8
             },
             {
-                "itemHrid": "/items/radiant_robe_top",
+                "itemHrid": "/items/radiant_robe_bottoms",
                 "count": 30
             },
             {
-                "itemHrid": "/items/flaming_robe_top",
+                "itemHrid": "/items/flaming_robe_bottoms",
                 "count": 10
             }
         ],
@@ -25645,7 +25645,7 @@
                 "count": 8
             },
             {
-                "itemHrid": "/items/radiant_robe_top",
+                "itemHrid": "/items/radiant_robe_bottoms",
                 "count": 50
             }
         ],
@@ -25911,11 +25911,11 @@
                 "count": 8
             },
             {
-                "itemHrid": "/items/radiant_robe_top",
+                "itemHrid": "/items/radiant_robe_bottoms",
                 "count": 30
             },
             {
-                "itemHrid": "/items/icy_robe_top",
+                "itemHrid": "/items/icy_robe_bottoms",
                 "count": 10
             }
         ],

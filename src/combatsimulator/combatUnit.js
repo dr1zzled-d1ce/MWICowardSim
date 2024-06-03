@@ -115,7 +115,8 @@ class CombatUnit {
             mayhem: 0,
             pierce: 0,
             curse: 0,
-            damageTaken: 0
+            damageTaken: 0,
+            attackSpeed: 0
         },
     };
     combatBuffs = {};
@@ -214,12 +215,12 @@ class CombatUnit {
         if (this.isPlayer) {
             this.combatDetails.combatStats.attackInterval /= (1 + (this.combatDetails.attackLevel / 2000));
         }
+        let baseAttackSpeed = this.combatDetails.combatStats.attackSpeed;
         let attackIntervalBoosts = this.getBuffBoosts("/buff_types/attack_speed");
         let attackIntervalRatioBoost = attackIntervalBoosts
             .map((boost) => boost.ratioBoost)
             .reduce((prev, cur) => prev + cur, 0);
-        this.combatDetails.combatStats.attackInterval /= (1 + attackIntervalRatioBoost);
-
+        this.combatDetails.combatStats.attackInterval /= (1 + (baseAttackSpeed + attackIntervalRatioBoost));
 
         let baseArmor = 0.2 * this.combatDetails.defenseLevel + this.combatDetails.combatStats.armor;
         this.combatDetails.totalArmor = baseArmor;
@@ -398,7 +399,7 @@ class CombatUnit {
                     if (haste > 0) {
                         cooldownDuration = cooldownDuration * 100 / (100 + haste);
                     }
-                    ability.lastUsed = currentTime - Math.floor(Math.random() * cooldownDuration);
+                    ability.lastUsed = currentTime - Math.floor(cooldownDuration * 0.5) + Math.floor(Math.random() * cooldownDuration * 0.5);
                 }
             });
     }
