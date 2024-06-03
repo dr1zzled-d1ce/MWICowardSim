@@ -28,6 +28,12 @@
             border: 1px solid #999;
             /* Add other relevant styles for form controls in dark mode */
         }
+
+        body.dark-mode #expensesTable,
+        body.dark-mode #revenueTable,
+        body.dark-mode #noRngRevenueTable {
+            color: #f0f0f0;
+        }
     </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -1483,6 +1489,13 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
+                            <div class="col-12 mb-4">
+                                <h6>June 3rd, 2024</h6>
+                                <ul>
+                                    <li>Updated game data</li>
+                                    <li>Fixed some dark mode CSS</li>
+                                </ul>
+                            </div>
                             <div class="col-12 mb-4">
                                 <h6>June 3rd, 2024</h6>
                                 <ul>
