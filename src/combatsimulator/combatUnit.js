@@ -110,7 +110,7 @@ class CombatUnit {
             firePenetration: 0,
             manaLeech: 0,
             castSpeed: 0,
-            threat: 0,
+            threat: 100,
             parry: 0,
             mayhem: 0,
             pierce: 0,
@@ -284,9 +284,11 @@ class CombatUnit {
         this.combatDetails.combatStats.combatRareFind += (1 + this.combatDetails.combatStats.combatRareFind) * combatRareFindBoosts.ratioBoost;
         this.combatDetails.combatStats.combatRareFind += combatRareFindBoosts.flatBoost;
 
+        let baseThreat = 100 + this.combatDetails.combatStats.threat;
+        this.combatDetails.totalThreat = baseThreat;
         let threatBoosts = this.getBuffBoost("/buff_types/threat");
-        this.combatDetails.totalThreat += this.combatDetails.totalThreat * threatBoosts.ratioBoost;
-        this.combatDetails.totalThreat += threatBoosts.flatBoost;
+        this.combatDetails.combatStats.threat += baseThreat * threatBoosts.ratioBoost;
+        this.combatDetails.combatStats.threat += threatBoosts.flatBoost;
     }
 
     addBuff(buff, currentTime) {

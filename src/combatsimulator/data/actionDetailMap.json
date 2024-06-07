@@ -9787,7 +9787,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.3,
+                "flatBoost": 0.1,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -10020,7 +10020,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.45,
+                "flatBoost": 0.15,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -11453,7 +11453,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.45,
+                "flatBoost": 0.15,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -11812,7 +11812,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.6,
+                "flatBoost": 0.2,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -12171,7 +12171,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.6,
+                "flatBoost": 0.2,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -12392,7 +12392,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.3,
+                "flatBoost": 0.1,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -12851,7 +12851,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.45,
+                "flatBoost": 0.15,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -13834,7 +13834,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.3,
+                "flatBoost": 0.1,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -14055,7 +14055,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.45,
+                "flatBoost": 0.15,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -14326,7 +14326,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.3,
+                "flatBoost": 0.1,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -14635,7 +14635,7 @@
                 "typeHrid": "/buff_types/combat_drop_rate",
                 "ratioBoost": 0,
                 "ratioBoostLevelBonus": 0,
-                "flatBoost": 0.6,
+                "flatBoost": 0.2,
                 "flatBoostLevelBonus": 0,
                 "startTime": "0001-01-01T00:00:00Z",
                 "duration": 0
@@ -16405,7 +16405,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 79
+        "sortIndex": 81
     },
     "/actions/crafting/arcane_crossbow": {
         "hrid": "/actions/crafting/arcane_crossbow",
@@ -16448,7 +16448,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 73
+        "sortIndex": 75
     },
     "/actions/crafting/arcane_fire_staff": {
         "hrid": "/actions/crafting/arcane_fire_staff",
@@ -16491,7 +16491,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 81
+        "sortIndex": 83
     },
     "/actions/crafting/arcane_lumber": {
         "hrid": "/actions/crafting/arcane_lumber",
@@ -16534,7 +16534,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 72
+        "sortIndex": 74
     },
     "/actions/crafting/arcane_nature_staff": {
         "hrid": "/actions/crafting/arcane_nature_staff",
@@ -16577,7 +16577,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 77
+        "sortIndex": 79
     },
     "/actions/crafting/arcane_shield": {
         "hrid": "/actions/crafting/arcane_shield",
@@ -16620,7 +16620,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 76
+        "sortIndex": 78
     },
     "/actions/crafting/arcane_water_staff": {
         "hrid": "/actions/crafting/arcane_water_staff",
@@ -16663,7 +16663,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 74
+        "sortIndex": 76
     },
     "/actions/crafting/basic_task_ring": {
         "hrid": "/actions/crafting/basic_task_ring",
@@ -17066,7 +17066,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 87
+        "sortIndex": 89
     },
     "/actions/crafting/cedar_bow": {
         "hrid": "/actions/crafting/cedar_bow",
@@ -17430,7 +17430,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 67
+        "sortIndex": 69
     },
     "/actions/crafting/crushed_amber": {
         "hrid": "/actions/crafting/crushed_amber",
@@ -17516,7 +17516,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 38
+        "sortIndex": 40
     },
     "/actions/crafting/crushed_garnet": {
         "hrid": "/actions/crafting/crushed_garnet",
@@ -17559,7 +17559,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 36
+        "sortIndex": 38
     },
     "/actions/crafting/crushed_jade": {
         "hrid": "/actions/crafting/crushed_jade",
@@ -17602,7 +17602,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 37
+        "sortIndex": 39
     },
     "/actions/crafting/crushed_moonstone": {
         "hrid": "/actions/crafting/crushed_moonstone",
@@ -17645,7 +17645,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 54
+        "sortIndex": 56
     },
     "/actions/crafting/crushed_pearl": {
         "hrid": "/actions/crafting/crushed_pearl",
@@ -17739,7 +17739,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 88
+        "sortIndex": 90
     },
     "/actions/crafting/earrings_of_armor": {
         "hrid": "/actions/crafting/earrings_of_armor",
@@ -17790,7 +17790,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 49
+        "sortIndex": 51
     },
     "/actions/crafting/earrings_of_gathering": {
         "hrid": "/actions/crafting/earrings_of_gathering",
@@ -17884,7 +17884,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 59
+        "sortIndex": 61
     },
     "/actions/crafting/earrings_of_regeneration": {
         "hrid": "/actions/crafting/earrings_of_regeneration",
@@ -17935,7 +17935,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 42
+        "sortIndex": 44
     },
     "/actions/crafting/earrings_of_resistance": {
         "hrid": "/actions/crafting/earrings_of_resistance",
@@ -17986,7 +17986,54 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 56
+        "sortIndex": 58
+    },
+    "/actions/crafting/earrings_of_threat": {
+        "hrid": "/actions/crafting/earrings_of_threat",
+        "function": "/action_functions/production",
+        "type": "/action_types/crafting",
+        "category": "/action_categories/crafting/earrings",
+        "name": "Earrings Of Threat",
+        "levelRequirement": {
+            "skillHrid": "/skills/crafting",
+            "level": 32
+        },
+        "baseTimeCost": 20000000000,
+        "experienceGain": {
+            "skillHrid": "/skills/crafting",
+            "value": 800
+        },
+        "dropTable": null,
+        "rareDropTable": [
+            {
+                "itemHrid": "/items/small_artisans_crate",
+                "dropRate": 0.0006111111111111112,
+                "minCount": 1,
+                "maxCount": 1,
+                "minEliteTier": 0
+            }
+        ],
+        "upgradeItemHrid": "",
+        "inputItems": [
+            {
+                "itemHrid": "/items/star_fragment",
+                "count": 600
+            },
+            {
+                "itemHrid": "/items/amber",
+                "count": 6
+            }
+        ],
+        "outputItems": [
+            {
+                "itemHrid": "/items/earrings_of_threat",
+                "count": 1
+            }
+        ],
+        "combatZoneInfo": null,
+        "maxPartySize": 0,
+        "buffs": null,
+        "sortIndex": 30
     },
     "/actions/crafting/enchanted_key": {
         "hrid": "/actions/crafting/enchanted_key",
@@ -18025,11 +18072,11 @@
             },
             {
                 "itemHrid": "/items/stone_key_fragment",
-                "count": 2
+                "count": 1
             },
             {
                 "itemHrid": "/items/burning_key_fragment",
-                "count": 2
+                "count": 1
             },
             {
                 "itemHrid": "/items/radiant_fabric",
@@ -18049,7 +18096,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 80
+        "sortIndex": 82
     },
     "/actions/crafting/expert_task_ring": {
         "hrid": "/actions/crafting/expert_task_ring",
@@ -18151,7 +18198,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 68
+        "sortIndex": 70
     },
     "/actions/crafting/fighter_necklace": {
         "hrid": "/actions/crafting/fighter_necklace",
@@ -18198,7 +18245,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 43
+        "sortIndex": 45
     },
     "/actions/crafting/frost_staff": {
         "hrid": "/actions/crafting/frost_staff",
@@ -18241,7 +18288,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 84
+        "sortIndex": 86
     },
     "/actions/crafting/ginkgo_bow": {
         "hrid": "/actions/crafting/ginkgo_bow",
@@ -18284,7 +18331,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 52
+        "sortIndex": 54
     },
     "/actions/crafting/ginkgo_crossbow": {
         "hrid": "/actions/crafting/ginkgo_crossbow",
@@ -18327,7 +18374,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 45
+        "sortIndex": 47
     },
     "/actions/crafting/ginkgo_fire_staff": {
         "hrid": "/actions/crafting/ginkgo_fire_staff",
@@ -18370,7 +18417,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 55
+        "sortIndex": 57
     },
     "/actions/crafting/ginkgo_lumber": {
         "hrid": "/actions/crafting/ginkgo_lumber",
@@ -18413,7 +18460,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 44
+        "sortIndex": 46
     },
     "/actions/crafting/ginkgo_nature_staff": {
         "hrid": "/actions/crafting/ginkgo_nature_staff",
@@ -18456,7 +18503,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 50
+        "sortIndex": 52
     },
     "/actions/crafting/ginkgo_shield": {
         "hrid": "/actions/crafting/ginkgo_shield",
@@ -18499,7 +18546,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 48
+        "sortIndex": 50
     },
     "/actions/crafting/ginkgo_water_staff": {
         "hrid": "/actions/crafting/ginkgo_water_staff",
@@ -18542,7 +18589,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 46
+        "sortIndex": 48
     },
     "/actions/crafting/infernal_battlestaff": {
         "hrid": "/actions/crafting/infernal_battlestaff",
@@ -18585,7 +18632,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 85
+        "sortIndex": 87
     },
     "/actions/crafting/jackalope_staff": {
         "hrid": "/actions/crafting/jackalope_staff",
@@ -18628,7 +18675,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 86
+        "sortIndex": 88
     },
     "/actions/crafting/lumber": {
         "hrid": "/actions/crafting/lumber",
@@ -18702,7 +18749,7 @@
         "inputItems": [
             {
                 "itemHrid": "/items/manticore_sting",
-                "count": 5
+                "count": 10
             }
         ],
         "outputItems": [
@@ -18714,7 +18761,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 78
+        "sortIndex": 80
     },
     "/actions/crafting/mirror_of_protection": {
         "hrid": "/actions/crafting/mirror_of_protection",
@@ -18757,7 +18804,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 71
+        "sortIndex": 73
     },
     "/actions/crafting/necklace_of_efficiency": {
         "hrid": "/actions/crafting/necklace_of_efficiency",
@@ -18808,7 +18855,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 29
+        "sortIndex": 31
     },
     "/actions/crafting/necklace_of_wisdom": {
         "hrid": "/actions/crafting/necklace_of_wisdom",
@@ -18859,7 +18906,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 60
+        "sortIndex": 62
     },
     "/actions/crafting/purpleheart_bow": {
         "hrid": "/actions/crafting/purpleheart_bow",
@@ -18902,7 +18949,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 35
+        "sortIndex": 37
     },
     "/actions/crafting/purpleheart_crossbow": {
         "hrid": "/actions/crafting/purpleheart_crossbow",
@@ -18945,7 +18992,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 31
+        "sortIndex": 33
     },
     "/actions/crafting/purpleheart_fire_staff": {
         "hrid": "/actions/crafting/purpleheart_fire_staff",
@@ -18988,7 +19035,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 40
+        "sortIndex": 42
     },
     "/actions/crafting/purpleheart_lumber": {
         "hrid": "/actions/crafting/purpleheart_lumber",
@@ -19031,7 +19078,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 30
+        "sortIndex": 32
     },
     "/actions/crafting/purpleheart_nature_staff": {
         "hrid": "/actions/crafting/purpleheart_nature_staff",
@@ -19074,7 +19121,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 34
+        "sortIndex": 36
     },
     "/actions/crafting/purpleheart_shield": {
         "hrid": "/actions/crafting/purpleheart_shield",
@@ -19117,7 +19164,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 33
+        "sortIndex": 35
     },
     "/actions/crafting/purpleheart_water_staff": {
         "hrid": "/actions/crafting/purpleheart_water_staff",
@@ -19160,7 +19207,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 32
+        "sortIndex": 34
     },
     "/actions/crafting/ranger_necklace": {
         "hrid": "/actions/crafting/ranger_necklace",
@@ -19207,7 +19254,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 51
+        "sortIndex": 53
     },
     "/actions/crafting/redwood_bow": {
         "hrid": "/actions/crafting/redwood_bow",
@@ -19250,7 +19297,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 66
+        "sortIndex": 68
     },
     "/actions/crafting/redwood_crossbow": {
         "hrid": "/actions/crafting/redwood_crossbow",
@@ -19293,7 +19340,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 62
+        "sortIndex": 64
     },
     "/actions/crafting/redwood_fire_staff": {
         "hrid": "/actions/crafting/redwood_fire_staff",
@@ -19336,7 +19383,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 70
+        "sortIndex": 72
     },
     "/actions/crafting/redwood_lumber": {
         "hrid": "/actions/crafting/redwood_lumber",
@@ -19379,7 +19426,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 61
+        "sortIndex": 63
     },
     "/actions/crafting/redwood_nature_staff": {
         "hrid": "/actions/crafting/redwood_nature_staff",
@@ -19422,7 +19469,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 65
+        "sortIndex": 67
     },
     "/actions/crafting/redwood_shield": {
         "hrid": "/actions/crafting/redwood_shield",
@@ -19465,7 +19512,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 64
+        "sortIndex": 66
     },
     "/actions/crafting/redwood_water_staff": {
         "hrid": "/actions/crafting/redwood_water_staff",
@@ -19508,7 +19555,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 63
+        "sortIndex": 65
     },
     "/actions/crafting/ring_of_armor": {
         "hrid": "/actions/crafting/ring_of_armor",
@@ -19559,7 +19606,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 47
+        "sortIndex": 49
     },
     "/actions/crafting/ring_of_gathering": {
         "hrid": "/actions/crafting/ring_of_gathering",
@@ -19653,7 +19700,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 58
+        "sortIndex": 60
     },
     "/actions/crafting/ring_of_regeneration": {
         "hrid": "/actions/crafting/ring_of_regeneration",
@@ -19704,7 +19751,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 41
+        "sortIndex": 43
     },
     "/actions/crafting/ring_of_resistance": {
         "hrid": "/actions/crafting/ring_of_resistance",
@@ -19755,7 +19802,54 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 53
+        "sortIndex": 55
+    },
+    "/actions/crafting/ring_of_threat": {
+        "hrid": "/actions/crafting/ring_of_threat",
+        "function": "/action_functions/production",
+        "type": "/action_types/crafting",
+        "category": "/action_categories/crafting/ring",
+        "name": "Ring Of Threat",
+        "levelRequirement": {
+            "skillHrid": "/skills/crafting",
+            "level": 30
+        },
+        "baseTimeCost": 20000000000,
+        "experienceGain": {
+            "skillHrid": "/skills/crafting",
+            "value": 800
+        },
+        "dropTable": null,
+        "rareDropTable": [
+            {
+                "itemHrid": "/items/small_artisans_crate",
+                "dropRate": 0.0006018518518518519,
+                "minCount": 1,
+                "maxCount": 1,
+                "minEliteTier": 0
+            }
+        ],
+        "upgradeItemHrid": "",
+        "inputItems": [
+            {
+                "itemHrid": "/items/star_fragment",
+                "count": 600
+            },
+            {
+                "itemHrid": "/items/amber",
+                "count": 6
+            }
+        ],
+        "outputItems": [
+            {
+                "itemHrid": "/items/ring_of_threat",
+                "count": 1
+            }
+        ],
+        "combatZoneInfo": null,
+        "maxPartySize": 0,
+        "buffs": null,
+        "sortIndex": 29
     },
     "/actions/crafting/sinister_key": {
         "hrid": "/actions/crafting/sinister_key",
@@ -19798,7 +19892,7 @@
             },
             {
                 "itemHrid": "/items/dark_key_fragment",
-                "count": 2
+                "count": 1
             },
             {
                 "itemHrid": "/items/holy_cheese",
@@ -19818,7 +19912,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 75
+        "sortIndex": 77
     },
     "/actions/crafting/soul_hunter_crossbow": {
         "hrid": "/actions/crafting/soul_hunter_crossbow",
@@ -19861,7 +19955,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 83
+        "sortIndex": 85
     },
     "/actions/crafting/sundering_crossbow": {
         "hrid": "/actions/crafting/sundering_crossbow",
@@ -19912,7 +20006,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 89
+        "sortIndex": 91
     },
     "/actions/crafting/treant_shield": {
         "hrid": "/actions/crafting/treant_shield",
@@ -19955,7 +20049,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 39
+        "sortIndex": 41
     },
     "/actions/crafting/vampiric_bow": {
         "hrid": "/actions/crafting/vampiric_bow",
@@ -20002,7 +20096,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 82
+        "sortIndex": 84
     },
     "/actions/crafting/watchful_relic": {
         "hrid": "/actions/crafting/watchful_relic",
@@ -20061,7 +20155,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 69
+        "sortIndex": 71
     },
     "/actions/crafting/wizard_necklace": {
         "hrid": "/actions/crafting/wizard_necklace",
@@ -20108,7 +20202,7 @@
         "combatZoneInfo": null,
         "maxPartySize": 0,
         "buffs": null,
-        "sortIndex": 57
+        "sortIndex": 59
     },
     "/actions/crafting/wooden_bow": {
         "hrid": "/actions/crafting/wooden_bow",
