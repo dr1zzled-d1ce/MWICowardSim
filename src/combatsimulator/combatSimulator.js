@@ -201,14 +201,7 @@ class CombatSimulator extends EventTarget {
             return;
         }
 
-        targets = targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0);
-
-        if (!targets || targets.length == 0) {
-            return;
-        }
-
-        for (let target of targets) {
-
+        for (let target of targets.filter((unit) => unit && unit.combatDetails.currentHitpoints > 0)) {
             let source = event.source;
 
             if(!event.source.isPlayer && Math.random()>(100/(100+1400))) { 
@@ -773,10 +766,6 @@ class CombatSimulator extends EventTarget {
         let targets;
         switch (abilityEffect.targetType) {
             case "enemy":
-                targets = source.isPlayer
-                    ? [CombatUtilities.getTarget(this.enemies)]
-                    : [CombatUtilities.getTarget(this.players)];
-                break;
             case "all enemies":
                 targets = source.isPlayer ? this.enemies : this.players;
                 break;
@@ -833,7 +822,6 @@ class CombatSimulator extends EventTarget {
                     if (!tempSource.isPlayer) {
                         this.simResult.updateTimeSpentAlive(tempSource.hrid, false, this.simulationTime);
                     }
-                    break;
                 }
             } else {
                 let attackResult = CombatUtilities.processAttack(source, target, abilityEffect);
@@ -929,6 +917,14 @@ class CombatSimulator extends EventTarget {
                     }
                     // console.log(target.hrid, "died");
                 }
+
+                if (attackResult.didHit && abilityEffect.pierceChance > Math.random()) {
+                    continue;
+                }
+            }
+
+            if (abilityEffect.targetType == "enemy") {
+                break;
             }
         }
     }
