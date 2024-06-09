@@ -666,12 +666,6 @@ class CombatSimulator extends EventTarget {
             return false;
         }
 
-        // console.log("Casting:", ability);
-        if (target.isPlayer) {
-            if(Math.random()>(100/(100+1400))) {
-                return;
-            }
-        }
         
         if (source.isPlayer) {
             if (source.abilityManaCosts.has(ability.hrid)) {
@@ -778,6 +772,12 @@ class CombatSimulator extends EventTarget {
                 let tempTarget = source;
                 let tempSource = target;
 
+                if (tempTarget.isPlayer) {
+                    if(Math.random()>(100/(100+1400))) {
+                        return;
+                    }
+                }
+
                 let attackResult = CombatUtilities.processAttack(tempSource, tempTarget);
 
                 this.simResult.addAttack(
@@ -824,6 +824,12 @@ class CombatSimulator extends EventTarget {
                     }
                 }
             } else {
+                if (target.isPlayer) {
+                    if(Math.random()>(100/(100+1400))) {
+                        return;
+                    }
+                }
+
                 let attackResult = CombatUtilities.processAttack(source, target, abilityEffect);
 
                 if (attackResult.didHit && abilityEffect.buffs) {
