@@ -7,7 +7,7 @@ this is a current repo in progress being developed for my goal in mwi to get lvl
 
 with recent updates, this strategy of running away is no longer possible. i never worked on it much, so it's not too much of a waste, i suppose.
 
-this repo now just serves for me to test various things. most notably, it 
+this repo now just serves for me to test various things. most notably, every attack from an enemy has a chance not to not happen at all, which tries to simulate gc threat.
 
 ## todo
 roughly in order:
